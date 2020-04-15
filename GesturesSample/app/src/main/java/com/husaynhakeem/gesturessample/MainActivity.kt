@@ -90,26 +90,18 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
 
-            override fun onFling(
-                event1: MotionEvent?,
-                event2: MotionEvent?,
-                velocityX: Float,
-                velocityY: Float
-            ): Boolean {
+            override fun onFling(event1: MotionEvent?, event2: MotionEvent?, velocityX: Float,
+                                 velocityY: Float): Boolean {
                 gestureDescription.addText(event1.description("Fling start"))
                 gestureDescription.addText(event2.description("Fling end"))
                 gestureDescription.addText("Fling velocity (${velocityX.round()}px/s, ${velocityY.round()}px/s)")
                 return true
             }
 
-            override fun onScroll(
-                event1: MotionEvent?,
-                event2: MotionEvent?,
-                distanceX: Float,
-                distanceY: Float
-            ): Boolean {
+            override fun onScroll(event1: MotionEvent?, event2: MotionEvent?, distanceX: Float,
+                                  distanceY: Float): Boolean {
                 gestureDescription.addText(event2.description("Scroll"))
-                gestureDescription.addText("Scroll distance (${distanceX.round()}, ${distanceY.round()})")
+                gestureDescription.addText("Scroll distance (${distanceX.toInt()}, ${distanceY.toInt()})")
                 return true
             }
 
