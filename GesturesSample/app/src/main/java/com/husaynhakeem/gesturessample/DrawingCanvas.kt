@@ -16,6 +16,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context,
                                               defStyleAttr: Int = -1) : View(context, attributeSet, defStyleAttr) {
 
     var isTouchEventListenerEnabled = true
+    private var isInScale = false
     private val pointerIdToPathMap = mutableMapOf<Int, Path>()
     private val finishedPointerPaths = mutableListOf<Path>()
     private val paint = Paint().apply {
@@ -29,8 +30,16 @@ class DrawingCanvas @JvmOverloads constructor(context: Context,
         }
     })
 
-    private val scaleGestureDetector = ScaleGestureDetector(context, object :
-            ScaleGestureDetector.SimpleOnScaleGestureListener() {
+    private val scaleGestureDetector = ScaleGestureDetector(context, object : ScaleGestureDetector.OnScaleGestureListener {
+        override fun onScaleBegin(detector: ScaleGestureDetector?): Boolean {
+            isInScale = true
+            return true
+        }
+
+        override fun onScaleEnd(detector: ScaleGestureDetector?) {
+            isInScale = false
+        }
+
         override fun onScale(detector: ScaleGestureDetector?): Boolean {
             detector?.let {
                 scaleX *= detector.scaleFactor
@@ -55,34 +64,38 @@ class DrawingCanvas @JvmOverloads constructor(context: Context,
             return false
         }
 
-        when (event?.actionMasked) {
-            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
-                val pointerIdToAdd = event.getPointerId(event.actionIndex)
-                val pathToAdd = Path().apply {
-                    moveTo(event.getX(event.actionIndex), event.getY(event.actionIndex))
+        scaleGestureDetector.onTouchEvent(event)
+        gestureDetector.onTouchEvent(event)
+
+        if (!isInScale) {
+            when (event?.actionMasked) {
+                MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
+                    val pointerIdToAdd = event.getPointerId(event.actionIndex)
+                    val pathToAdd = Path().apply {
+                        moveTo(event.getX(event.actionIndex), event.getY(event.actionIndex))
+                    }
+                    pointerIdToPathMap[pointerIdToAdd] = pathToAdd
                 }
-                pointerIdToPathMap[pointerIdToAdd] = pathToAdd
-            }
-            MotionEvent.ACTION_MOVE -> {
-                for (i in 0 until event.pointerCount) {
-                    val path = pointerIdToPathMap[event.getPointerId(i)]
-                    path?.lineTo(event.getX(i), event.getY(i))
+                MotionEvent.ACTION_MOVE -> {
+                    for (i in 0 until event.pointerCount) {
+                        val path = pointerIdToPathMap[event.getPointerId(i)]
+                        path?.lineTo(event.getX(i), event.getY(i))
+                    }
                 }
-            }
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP -> {
-                val pointerToRemove = event.getPointerId(event.actionIndex)
-                val pathToRemove = pointerIdToPathMap[pointerToRemove]
-                if (pathToRemove != null) {
-                    finishedPointerPaths.add(pathToRemove)
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP -> {
+                    val pointerToRemove = event.getPointerId(event.actionIndex)
+                    val pathToRemove = pointerIdToPathMap[pointerToRemove]
+                    if (pathToRemove != null) {
+                        finishedPointerPaths.add(pathToRemove)
+                    }
+                    pointerIdToPathMap.remove(pointerToRemove)
                 }
-                pointerIdToPathMap.remove(pointerToRemove)
-            }
-            else -> {
-                return false
+                else -> {
+                    return false
+                }
             }
         }
-        gestureDetector.onTouchEvent(event)
-        scaleGestureDetector.onTouchEvent(event)
+
         invalidate()
         return true
     }
