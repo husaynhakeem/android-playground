@@ -6,7 +6,6 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GestureDetectorCompat
 import com.husaynhakeem.gesturessample.extension.*
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -16,20 +15,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         touchListenerChoices.setOnCheckedChangeListener { _, checkedId ->
+            drawingCanvas.isTouchEventListenerEnabled = false
+            drawingCanvas.clear()
+            gestureDescription.clear()
             when (checkedId) {
+                R.id.defaultTouch -> setUpDefaultTouchListener()
                 R.id.singleTouch -> setUpSingleTouchListener()
                 R.id.multiTouch -> setUpMultiTouchListener()
                 R.id.gestureDetector -> setUpGestureDetector()
                 R.id.scaleGestureDetector -> setUpScaleGestureDetector()
             }
-            gestureDescription.clear()
         }
-        singleTouch.isChecked = true
+    }
+
+    private fun setUpDefaultTouchListener() {
+        drawingCanvas.setOnTouchListener(null)
+        drawingCanvas.isTouchEventListenerEnabled = true
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setUpSingleTouchListener() {
-        gestureView.setOnTouchListener { _, event ->
+        drawingCanvas.setOnTouchListener { _, event ->
             val eventDescription = event.singleTouchDescription()
             when {
                 eventDescription.isEmpty() -> {
@@ -49,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setUpMultiTouchListener() {
-        gestureView.setOnTouchListener { _, event ->
+        drawingCanvas.setOnTouchListener { _, event ->
             val eventDescription = event.multiTouchDescription()
             when {
                 eventDescription.isEmpty() -> {
@@ -129,9 +135,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val gestureDetector = GestureDetectorCompat(this, gestureListener)
+        val gestureDetector = GestureDetector(this, gestureListener)
 
-        gestureView.setOnTouchListener { _, event ->
+        drawingCanvas.setOnTouchListener { _, event ->
             val isEventHandledByGestureListener = gestureDetector.onTouchEvent(event)
             if (isEventHandledByGestureListener) {
                 return@setOnTouchListener true
@@ -161,7 +167,7 @@ class MainActivity : AppCompatActivity() {
 
         val scaleGestureDetector = ScaleGestureDetector(this, scaleGestureDetectorListener)
 
-        gestureView.setOnTouchListener { _, event ->
+        drawingCanvas.setOnTouchListener { _, event ->
             val isEventHandledByGestureListener = scaleGestureDetector.onTouchEvent(event)
             if (isEventHandledByGestureListener) {
                 return@setOnTouchListener true

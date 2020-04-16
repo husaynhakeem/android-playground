@@ -8,11 +8,17 @@
     tools:context=".MainActivity">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/gestureView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="16dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <com.husaynhakeem.gesturessample.DrawingCanvas
+            android:id="@+id/drawingCanvas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.cardview.widget.CardView>
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -26,6 +32,14 @@
             android:layout_height="wrap_content"
             app:singleLine="true"
             app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/defaultTouch"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/touch_listener_default" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/singleTouch"
