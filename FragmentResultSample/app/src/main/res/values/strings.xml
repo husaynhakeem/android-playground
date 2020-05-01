@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FragmentResult Sample</string>
+    <string name="result_listener_enter_number_label">Enter a number</string>
+    <string name="result_listener_number_message">You entered the number %d</string>
+    <string name="result_done_label">Done</string>
+    <string name="result_number_hint">Enter a number</string>
+    <string name="invalid_number_error">Enter a valid number</string>
+</resources>
