@@ -1,4 +1,4 @@
-package com.husaynhakeem.fragmentresultsample.fragment_to_fragment
+package com.husaynhakeem.fragmentresultsample.child_to_parent
 
 import android.os.Bundle
 import android.view.View
@@ -7,21 +7,21 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.husaynhakeem.fragmentresultsample.R
-import kotlinx.android.synthetic.main.fragment_result.*
+import kotlinx.android.synthetic.main.fragment_child.*
 
-class ResultFragment : Fragment(R.layout.fragment_result) {
+class ChildFragment : Fragment(R.layout.fragment_child) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpResultDoneButtonClickListener()
+        setUpDoneButtonClickListener()
     }
 
-    private fun setUpResultDoneButtonClickListener() {
-        resultDoneButton.setOnClickListener {
+    private fun setUpDoneButtonClickListener() {
+        childDoneButton.setOnClickListener {
             try {
-                val number = resultNumberEditText.text.toString().toInt()
-                setResult(number)
-                parentFragmentManager.popBackStack()
+                val number = childNumberEditText.text.toString().toInt()
+                setResultWithFMExtension(number)
+                childNumberEditText.setText("")
             } catch (exception: NumberFormatException) {
                 Toast.makeText(
                     requireContext(),
@@ -34,15 +34,15 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
     private fun setResult(number: Int) {
         parentFragmentManager.setFragmentResult(
-            ResultListenerFragment.REQUEST_KEY,
-            bundleOf(ResultListenerFragment.KEY_NUMBER to number)
+            ParentFragment.REQUEST_KEY,
+            bundleOf(ParentFragment.KEY_NUMBER to number)
         )
     }
 
     private fun setResultWithFMExtension(number: Int) {
         setFragmentResult(
-            ResultListenerFragment.REQUEST_KEY,
-            bundleOf(ResultListenerFragment.KEY_NUMBER to number)
+            ParentFragment.REQUEST_KEY,
+            bundleOf(ParentFragment.KEY_NUMBER to number)
         )
     }
 }

@@ -4,5 +4,5 @@
     <string name="result_listener_number_message">You entered the number %d</string>
     <string name="result_done_label">Done</string>
     <string name="result_number_hint">Enter a number</string>
-    <string name="result_invalid_number_error">Enter a valid number</string>
+    <string name="invalid_number_error">Enter a valid number</string>
 </resources>
