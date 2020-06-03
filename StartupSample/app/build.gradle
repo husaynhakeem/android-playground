@@ -27,6 +27,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation "androidx.startup:startup-runtime:1.0.0-SNAPSHOT"
+    implementation(project(":first-dependency"))
+    implementation(project(":second-dependency"))
 }

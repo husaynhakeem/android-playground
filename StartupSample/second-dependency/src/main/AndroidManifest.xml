@@ -1,0 +1,18 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.husaynhakeem.second_dependency">
+
+    <application>
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+
+            <!-- Automatically Initialize Initializer2C.Dependency and its dependencies at app startup -->
+            <meta-data
+                android:name="com.husaynhakeem.second_dependency.Initializer2C"
+                android:value="androidx.startup" />
+        </provider>
+    </application>
+</manifest>

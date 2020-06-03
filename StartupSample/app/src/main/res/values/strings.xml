@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Startup Sample</string>
+    <string name="automatic_initialization_not_done">Automatic initialization has not been done yet.</string>
+    <string name="automatic_initialization_done">Automatic initialization is complete!</string>
+    <string name="manual_initialization_not_done">Manual initialization has not been done yet.</string>
+    <string name="manual_initialization_done">Manual initialization is complete!</string>
+    <string name="perform_manual_initialization">Perform manual initialization</string>
 </resources>
