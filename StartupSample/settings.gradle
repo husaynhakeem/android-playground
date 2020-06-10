@@ -1,0 +1,4 @@
+include ':first-dependency'
+include ':second-dependency'
+include ':app'
+rootProject.name = "StartupSample"

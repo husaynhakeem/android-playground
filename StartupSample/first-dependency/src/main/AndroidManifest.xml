@@ -1,0 +1,25 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.husaynhakeem.first_dependency">
+
+    <application>
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+
+            <!-- Automatically Initialize Initializer1A.Dependency at app startup -->
+            <meta-data
+                android:name="com.husaynhakeem.first_dependency.Initializer1A"
+                android:value="androidx.startup" />
+
+            <!-- Disable automatic initialization for Initializer1B -->
+            <meta-data
+                android:name="com.husaynhakeem.first_dependency.Initializer1B"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+    </application>
+
+</manifest>
