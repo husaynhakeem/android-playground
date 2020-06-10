@@ -5,4 +5,4 @@ Android sample app to learn about passing data between fragments using the new [
 - Passing data between a child fragment and its parent.
 - Testing that data is correctly passed between fragments using [FragmentScenario](https://developer.android.com/reference/androidx/fragment/app/testing/FragmentScenario).
 
-This sample follows this [documentation](https://developer.android.com/training/basics/fragments/pass-data-between).
+This sample was used in this [article](https://proandroiddev.com/android-fragments-fragment-result-805a6b2522ea).
