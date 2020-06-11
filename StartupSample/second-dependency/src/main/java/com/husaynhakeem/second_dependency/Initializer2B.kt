@@ -9,7 +9,6 @@ class Initializer2B : Initializer<Initializer2B.Dependency> {
 
     override fun create(context: Context): Dependency {
         Log.d(TAG, "Initializer2B#create()")
-        Thread.sleep(3_000)
         return Dependency()
     }
 

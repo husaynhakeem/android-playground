@@ -8,7 +8,6 @@ class Initializer1A : Initializer<Initializer1A.Dependency> {
 
     override fun create(context: Context): Dependency {
         Log.d(TAG, "Initializer1A#create()")
-        Thread.sleep(3_000)
         return Dependency()
     }
 
