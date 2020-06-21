@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Hilt Sample</string>
+    <string name="error_loading_comments">An error occurred while loading the comments.</string>
+    <string name="retry">Retry</string>
+</resources>
