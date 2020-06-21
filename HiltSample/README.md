@@ -2,7 +2,7 @@
 
 Android sample app to learn about dependency injection in Android using Hilt. 
 
-![alt text](https://github.com/husaynhakeem/android-playground/blob/hilt/HiltSample/art/art.png)
+![alt text](https://github.com/husaynhakeem/android-playground/blob/master/HiltSample/art/art.png)
 
 It mainly showcases:
 - Field injection
