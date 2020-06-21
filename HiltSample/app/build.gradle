@@ -35,6 +35,11 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.2.5"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
 
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.6.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.12.0"
+
     // Hilt dependencies
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"

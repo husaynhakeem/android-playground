@@ -29,6 +29,9 @@ class PostsFragment : Fragment(R.layout.fragment_posts) {
                 }
             }
         })
+        postsRetryButton.setOnClickListener {
+            viewModel.getPosts()
+        }
     }
 
     companion object {

@@ -2,5 +2,5 @@ package com.husaynhakeem.hiltsample.data
 
 interface PostsDataSource {
 
-    fun getPosts(): List<Post>
+    suspend fun getPosts(): List<Post>
 }
