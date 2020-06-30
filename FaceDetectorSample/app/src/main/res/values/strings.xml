@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">FaceDetector Sample</string>
+    <string name="permissions_not_granted">Required permissions not granted by user.</string>
+    <string name="no_available_camera">No available cameras for usage.</string>
+    <string name="camera_selection_error">An error occurred while choosing a camera lens facing.</string>
+</resources>
