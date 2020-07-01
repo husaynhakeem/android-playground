@@ -12,9 +12,9 @@ It mainly showcases:
 - Drawing the face bounds around detected faces on top of the viewfinder.
 
 ### Resources to learn about CameraX
-- [CameraX codelab](codelabs.developers.google.com/codelabs/camerax-getting-started)
-- [CameraX documentation](developer.android.com/training/camerax)
-- [Displaying a camera preview with PreviewView](medium.com/androiddevelopers/display-a-camera-preview-with-previewview-86562433d86c)
+- [CameraX codelab](https://codelabs.developers.google.com/codelabs/camerax-getting-started)
+- [CameraX documentation](https://developer.android.com/training/camerax)
+- [Displaying a camera preview with PreviewView](https://medium.com/androiddevelopers/display-a-camera-preview-with-previewview-86562433d86c)
 
 ### Resources to learn about MLKit
-- [MLKit documentation](developers.google.com/ml-kit/vision/face-detection)
+- [MLKit documentation](https://developers.google.com/ml-kit/vision/face-detection)
