@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">MapsSample</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="app_name">Maps Sample</string>
+    <string name="map_type_normal">Normal</string>
+    <string name="map_type_satellite">Satellite</string>
+    <string name="map_type_terrain">Terrain</string>
+    <string name="map_type_hybrid">Hybrid</string>
 </resources>
