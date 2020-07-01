@@ -14,5 +14,5 @@ It mainly showcases:
 There wasn't much documentation around testing with Hilt. I might add it in the future.
 
 ### Resources to learn abour Hilt
-- [Hilt codelab](codelabs.developers.google.com/codelabs/android-hilt)
+- [Hilt codelab](https://codelabs.developers.google.com/codelabs/android-hilt)
 - [Hilt documentation](https://developer.android.com/training/dependency-injection/hilt-android)
