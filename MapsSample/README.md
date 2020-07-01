@@ -10,6 +10,6 @@ It mainly showcases:
 - Using different types of maps (Satellite, terrain, etc).
 - Implementing geocoding.
 
-### Resources to learn about CameraX
+### Resources to learn about Google Maps
 - [Google Maps documentation](developers.google.com/maps/documentation/android-sdk/intro)
 - [Introduction to Google Maps API](raywenderlich.com/230-introduction-to-google-maps-api-for-android-with-kotlin) (Note that parts of this tutorial are outdated).
