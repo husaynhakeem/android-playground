@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Thermal Sample</string>
+
+    <!-- Notification channel -->
+    <string name="notification_channel_label">Show thermal status</string>
+
+    <!-- Notification -->
+    <string name="notification_title">Thermal status</string>
+    <string name="thermal_api_not_supported">The thermal API is only supported starting from API 29</string>
+    <string name="start_thermal_service">Start thermal service</string>
+    <string name="stop_thermal_service">Stop thermal service</string>
+</resources>
