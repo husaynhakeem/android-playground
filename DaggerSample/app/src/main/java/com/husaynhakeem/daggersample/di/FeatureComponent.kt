@@ -1,0 +1,13 @@
+package com.husaynhakeem.daggersample.di
+
+import com.husaynhakeem.daggersample.view.impl.AllNewsFragment
+import com.husaynhakeem.daggersample.view.impl.NewsItemFragment
+import dagger.Component
+
+@FeatureScope
+@Component(modules = [FeatureModule::class], dependencies = [AppComponent::class])
+interface FeatureComponent {
+
+    fun inject(allNewsFragment: AllNewsFragment)
+    fun inject(newsItemFragment: NewsItemFragment)
+}

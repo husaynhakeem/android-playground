@@ -1,14 +1,12 @@
 package com.husaynhakeem.daggersample.di
 
-import com.husaynhakeem.daggersample.view.impl.AllNewsFragment
-import com.husaynhakeem.daggersample.view.impl.NewsItemFragment
+import com.husaynhakeem.daggersample.repository.NewsRepository
 import dagger.Component
 import javax.inject.Singleton
 
-@Component(modules = [PresentersModule::class, RepositoriesModule::class])
+@Component(modules = [AppModule::class])
 @Singleton
 interface AppComponent {
 
-    fun inject(allNewsFragment: AllNewsFragment)
-    fun inject(newsItemFragment: NewsItemFragment)
+    fun newsRepository(): NewsRepository
 }

@@ -2,11 +2,12 @@ package com.husaynhakeem.daggersample.view.impl
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import com.husaynhakeem.daggersample.DaggerApp
+import com.husaynhakeem.daggersample.MainActivity
 import com.husaynhakeem.daggersample.R
 import com.husaynhakeem.daggersample.model.News
 import com.husaynhakeem.daggersample.presenter.NewsItemPresenter
@@ -21,7 +22,10 @@ class NewsItemFragment : Fragment(R.layout.fragment_news_item), NewsItemView {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireContext().applicationContext as DaggerApp).appComponent().inject(this)
+        (requireActivity() as MainActivity)
+            .get()
+            .inject(this)
+        Log.i("Husayn", "In NewsItemFragment using NewsItemPresenter $presenter")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

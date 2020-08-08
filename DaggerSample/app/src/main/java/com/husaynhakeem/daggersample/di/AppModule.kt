@@ -7,7 +7,7 @@ import dagger.Module
 import javax.inject.Singleton
 
 @Module
-interface RepositoriesModule {
+interface AppModule {
 
     @Binds
     @Singleton

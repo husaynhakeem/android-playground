@@ -8,7 +8,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-interface PresentersModule {
+interface FeatureModule {
 
     @Binds
     fun provideAllNewsPresenter(allNewsPresenterImpl: AllNewsPresenterImpl): AllNewsPresenter
