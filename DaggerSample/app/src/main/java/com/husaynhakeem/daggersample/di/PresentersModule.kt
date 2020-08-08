@@ -4,20 +4,15 @@ import com.husaynhakeem.daggersample.presenter.AllNewsPresenter
 import com.husaynhakeem.daggersample.presenter.NewsItemPresenter
 import com.husaynhakeem.daggersample.presenter.impl.AllNewsPresenterImpl
 import com.husaynhakeem.daggersample.presenter.impl.NewsItemPresenterImpl
-import com.husaynhakeem.daggersample.repository.NewsRepository
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
 @Module
-object PresentersModule {
+interface PresentersModule {
 
-    @Provides
-    fun provideAllNewsPresenter(repo: NewsRepository): AllNewsPresenter {
-        return AllNewsPresenterImpl(repo)
-    }
+    @Binds
+    fun provideAllNewsPresenter(allNewsPresenterImpl: AllNewsPresenterImpl): AllNewsPresenter
 
-    @Provides
-    fun provideNewsItemPresenter(repo: NewsRepository): NewsItemPresenter {
-        return NewsItemPresenterImpl(repo)
-    }
+    @Binds
+    fun provideNewsItemPresenter(newsItemPresenterImpl: NewsItemPresenterImpl): NewsItemPresenter
 }
