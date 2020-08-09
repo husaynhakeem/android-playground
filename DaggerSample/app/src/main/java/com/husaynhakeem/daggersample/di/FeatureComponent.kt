@@ -5,7 +5,7 @@ import com.husaynhakeem.daggersample.view.impl.NewsItemFragment
 import dagger.Subcomponent
 
 @FeatureScope
-@Subcomponent(modules = [FeatureModule::class])
+@Subcomponent(modules = [FeatureModule::class, StatsModule::class, ThirdPartyStatsModule::class])
 interface FeatureComponent {
 
     fun inject(allNewsFragment: AllNewsFragment)
