@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Biometric Sample</string>
+    <string name="authenticator_weak">Weak biometric authenticator</string>
+    <string name="authenticator_strong">Strong biometric authenticator</string>
+    <string name="authenticator_device_credential">Device credential. Non biometric authenticator. E.g. PIN, pattern, password.</string>
+    <string name="configuration_change_keep">Keep authentication dialog on configuration change</string>
+    <string name="authentication_confirmation_required">Require post authentication confirmation</string>
+    <string name="negative_button_show">Show negative button</string>
+    <string name="authenticate_encrypt">Authenticate + Encrypt</string>
+    <string name="authenticate_decrypt">Authenticate + Decrypt</string>
+    <string name="authenticate">Authenticate</string>
+    <string name="clear_logs">Clear logs</string>
 </resources>
