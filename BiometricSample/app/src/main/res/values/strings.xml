@@ -10,4 +10,5 @@
     <string name="authenticate_decrypt">Authenticate + Decrypt</string>
     <string name="authenticate">Authenticate</string>
     <string name="clear_logs">Clear logs</string>
+    <string name="can_authenticate">Can authenticate</string>
 </resources>

@@ -6,20 +6,26 @@
     android:orientation="vertical">
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/canAuthenticate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/can_authenticate" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/authenticate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/authenticate" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/authenticate_encrypt"
+        android:id="@+id/authenticateEncrypt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/authenticate_encrypt"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/authenticate_decrypt"
+        android:id="@+id/authenticateDecrypt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/authenticate_decrypt" />

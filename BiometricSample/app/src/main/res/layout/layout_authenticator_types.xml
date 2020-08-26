@@ -5,19 +5,19 @@
     android:orientation="vertical">
 
     <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/authenticator_strong"
+        android:id="@+id/authenticatorStrong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/authenticator_strong" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/authenticator_weak"
+        android:id="@+id/authenticatorWeak"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/authenticator_weak" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/authenticator_device_credential"
+        android:id="@+id/authenticatorDeviceCredential"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/authenticator_device_credential" />
