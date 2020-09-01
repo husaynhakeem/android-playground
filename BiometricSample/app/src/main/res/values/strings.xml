@@ -11,4 +11,10 @@
     <string name="authenticate">Authenticate</string>
     <string name="clear_logs">Clear logs</string>
     <string name="can_authenticate">Can authenticate</string>
+
+    <!-- Biometric prompt attributes -->
+    <string name="prompt_title">Title</string>
+    <string name="prompt_subtitle">Subtitle</string>
+    <string name="prompt_description">Description</string>
+    <string name="prompt_negative_text">Negative text</string>
 </resources>

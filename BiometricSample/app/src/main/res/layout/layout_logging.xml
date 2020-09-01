@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/clear_logs"
+        android:id="@+id/clearLogs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/clear_logs" />
