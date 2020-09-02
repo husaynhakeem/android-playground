@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.hardware.biometrics.BiometricManager.Authenticators.*
 import android.os.Build
 import android.os.Bundle
-import android.security.keystore.KeyGenParameterSpec
-import android.security.keystore.KeyProperties
 import android.security.keystore.KeyProperties.AUTH_BIOMETRIC_STRONG
 import android.security.keystore.KeyProperties.AUTH_DEVICE_CREDENTIAL
 import androidx.annotation.RequiresApi
@@ -20,12 +18,9 @@ import kotlinx.android.synthetic.main.layout_authenticator_types.*
 import kotlinx.android.synthetic.main.layout_configuration_change.*
 import kotlinx.android.synthetic.main.layout_logging.*
 import kotlinx.android.synthetic.main.layout_negative_button.*
-import java.nio.charset.Charset
-import java.security.KeyStore
-import javax.crypto.Cipher
-import javax.crypto.KeyGenerator
-import javax.crypto.SecretKey
 
+// TODO: Remove this suppression
+@SuppressLint("NewApi")
 class MainActivity : AppCompatActivity() {
 
     /** Callback to receive callbacks from a authentication operation */
@@ -34,9 +29,10 @@ class MainActivity : AppCompatActivity() {
     /** Manages a biometric prompt, and allows to perform an authentication operation */
     private lateinit var biometricPrompt: BiometricPrompt
 
-    private val toEncrypt = "Hello world!"
-    private var shouldEncrypt = true
-    private var encryptionResult: ByteArray? = null
+    private lateinit var encryptionManager: EncryptionManager
+
+    private var shouldEncrypt: Boolean = true
+    private var encryptedData: ByteArray = byteArrayOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,20 +44,14 @@ class MainActivity : AppCompatActivity() {
                 val cryptoObject = result.cryptoObject
                 log("Authentication succeeded [${getAuthenticationType(type)}] - Crypto: $cryptoObject")
 
-                if (cryptoObject != null) {
-                    val cipher = cryptoObject.cipher ?: return
-
-                    if (shouldEncrypt) { // Should encrypt
-                        encryptionResult =
-                            cipher.doFinal(toEncrypt.toByteArray(Charset.defaultCharset()))
-                        log("Encrypted text: $encryptionResult")
-                    } else { // Should decrypt
-                        encryptionResult = cipher.doFinal(encryptionResult)
-                        log("Decrypted text: $encryptionResult")
-                    }
-
-                    shouldEncrypt = !shouldEncrypt
+                val cipher = cryptoObject?.cipher ?: return
+                if (shouldEncrypt) {
+                    encryptedData = encryptionManager.encrypt(cipher, "Hello world!")
+                    log("Encrypted text: $encryptedData")
+                } else {
+                    log("Decrypted text: ${encryptionManager.decrypt(cipher, encryptedData)}")
                 }
+                shouldEncrypt = !shouldEncrypt
             }
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
@@ -79,11 +69,25 @@ class MainActivity : AppCompatActivity() {
             authenticationCallback
         )
 
-        canAuthenticate.setOnClickListener { canAuthenticate() }
-        authenticate.setOnClickListener { authenticateWithoutCrypto() }
-        authenticateEncrypt.setOnClickListener { tryAuthenticateWithCrypto() }
-        authenticateDecrypt.setOnClickListener { tryAuthenticateWithCrypto() }
-        clearLogs.setOnClickListener { clearLogs() }
+        canAuthenticate.setOnClickListener {
+            canAuthenticate()
+        }
+        authenticate.setOnClickListener {
+            authenticateWithoutCrypto()
+        }
+        authenticateEncrypt.setOnClickListener {
+            if (canAuthenticateWithCrypto()) {
+                authenticateAndEncrypt()
+            }
+        }
+        authenticateDecrypt.setOnClickListener {
+            if (canAuthenticateWithCrypto()) {
+                authenticateAndDecrypt()
+            }
+        }
+        clearLogs.setOnClickListener {
+            clearLogs()
+        }
     }
 
     override fun onStop() {
@@ -109,7 +113,6 @@ class MainActivity : AppCompatActivity() {
         return configurationChange.isChecked
     }
 
-    // region Authentication
     private fun canAuthenticate() {
         val biometricManager = BiometricManager.from(this)
         val canAuthenticate =
@@ -142,29 +145,42 @@ class MainActivity : AppCompatActivity() {
         biometricPrompt.authenticate(promptInfo)
     }
 
-    private fun tryAuthenticateWithCrypto() {
+    private fun canAuthenticateWithCrypto(): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             log("Cannot authenticate with crypto on API levels prior to 23 as key-gen is not supported.")
-            return
+            return false
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && (getSecretKeyType() and AUTH_BIOMETRIC_STRONG == 0)) {
             log("Authentication type must be strong to authenticate with crypto.")
-            return
+            return false
         }
 
-        authenticateWithCrypto()
-    }
-
-    private fun canAuthenticateWithCrypto(): Boolean {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+        return true
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    private fun authenticateWithCrypto() {
+    private fun authenticateAndEncrypt() {
         val promptInfo = buildPromptInfo() ?: return
-        generateAndStoreKeyInKeyStore()
-        val crypto = getCrypto()
+        encryptionManager = EncryptionManager(getSecretKeyType())
+        val crypto = encryptionManager.getCryptoToEncrypt()
+
+        try {
+            biometricPrompt.authenticate(promptInfo, crypto)
+        } catch (exception: IllegalArgumentException) {
+            log("Authentication with crypto error - ${exception.message}")
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun authenticateAndDecrypt() {
+        val promptInfo = buildPromptInfo() ?: return
+        val crypto = try {
+            encryptionManager.getCryptoToDecrypt()
+        } catch (exception: IllegalStateException) {
+            log("Failed to create a crypto object to use for decryption - ${exception.message}")
+            return
+        }
 
         try {
             biometricPrompt.authenticate(promptInfo, crypto)
@@ -204,37 +220,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun generateAndStoreKeyInKeyStore() {
-        // Create key spec used to create a [KeyGenerator]. Defines things such as whether
-        // authentication is required to use the key, allowed operations, etc.
-        val keyPurpose = KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
-        val builder = KeyGenParameterSpec.Builder(KEY_NAME, keyPurpose)
-            .setBlockModes(BLOCK_MODE)
-            .setEncryptionPaddings(ENCRYPTION_PADDING)
-
-        // Require authentication to use the key
-        builder.setUserAuthenticationRequired(true)
-
-        // Require authentication for every single use of the key
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            builder.setUserAuthenticationParameters(0 /* timeout */, getSecretKeyType())
-        } else {
-            @Suppress("DEPRECATION")
-            builder.setUserAuthenticationValidityDurationSeconds(-1)
-        }
-        val keySpec = builder.build()
-
-        // Create a generator of keys for the AES algorithm using the android key store provider
-        val keyGenerator = KeyGenerator.getInstance(KEY_ALGORITHM, KEYSTORE)
-
-        // Initialize the key generator with the specified parameters/specs
-        keyGenerator.init(keySpec)
-
-        // Generate a secret key and store it
-        keyGenerator.generateKey()
-    }
-
     @RequiresApi(Build.VERSION_CODES.R)
     private fun getSecretKeyType(): Int {
         val strong = if (authenticatorStrong.isChecked) AUTH_BIOMETRIC_STRONG else 0
@@ -242,34 +227,6 @@ class MainActivity : AppCompatActivity() {
             if (authenticatorDeviceCredential.isChecked) AUTH_DEVICE_CREDENTIAL else 0
         return strong or deviceCredential
     }
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun getCipher(): Cipher {
-        return Cipher.getInstance("$KEY_ALGORITHM/$BLOCK_MODE/$ENCRYPTION_PADDING")
-    }
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun getCrypto(): BiometricPrompt.CryptoObject {
-        val cipher = getCipher()
-
-        if (shouldEncrypt) { // Should encrypt
-            cipher.init(Cipher.ENCRYPT_MODE, getSecretKey())
-        } else { // Should decrypt
-            cipher.init(Cipher.DECRYPT_MODE, getSecretKey())
-        }
-
-        return BiometricPrompt.CryptoObject(cipher)
-    }
-
-    /**
-     * Returns the previously generated secret key from keystore.
-     */
-    private fun getSecretKey(): SecretKey {
-        val keyStore = KeyStore.getInstance(KEYSTORE)
-        keyStore.load(null)
-        return keyStore.getKey(KEY_NAME, null) as SecretKey
-    }
-    // endregion Authentication
 
     @SuppressLint("SetTextI18n")
     private fun log(message: String) {
@@ -279,20 +236,5 @@ class MainActivity : AppCompatActivity() {
 
     private fun clearLogs() {
         logs.text = ""
-    }
-
-    companion object {
-        private const val KEY_NAME = "my-key-name"
-        private const val KEYSTORE = "AndroidKeyStore"
-        private const val IV = "my-iv"
-
-        @RequiresApi(Build.VERSION_CODES.M)
-        private const val KEY_ALGORITHM = KeyProperties.KEY_ALGORITHM_AES
-
-        @RequiresApi(Build.VERSION_CODES.M)
-        private const val BLOCK_MODE = KeyProperties.BLOCK_MODE_CBC
-
-        @RequiresApi(Build.VERSION_CODES.M)
-        private const val ENCRYPTION_PADDING = KeyProperties.ENCRYPTION_PADDING_PKCS7
     }
 }
