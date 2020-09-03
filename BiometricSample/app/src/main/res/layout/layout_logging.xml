@@ -10,15 +10,11 @@
         android:layout_height="wrap_content"
         android:text="@string/clear_logs" />
 
-    <ScrollView
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/logs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/logs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:lines="20" />
 
 </LinearLayout>
