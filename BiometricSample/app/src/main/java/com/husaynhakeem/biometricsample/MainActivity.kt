@@ -12,6 +12,8 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.PromptInfo
 import androidx.core.content.ContextCompat
+import com.husaynhakeem.biometricsample.EncryptionMode.DECRYPT
+import com.husaynhakeem.biometricsample.EncryptionMode.ENCRYPT
 import kotlinx.android.synthetic.main.layout_authenticate.*
 import kotlinx.android.synthetic.main.layout_authentication_confirmation.*
 import kotlinx.android.synthetic.main.layout_authenticator_types.*
@@ -29,10 +31,8 @@ class MainActivity : AppCompatActivity() {
     /** Manages a biometric prompt, and allows to perform an authentication operation */
     private lateinit var biometricPrompt: BiometricPrompt
 
-    private lateinit var encryptionManager: EncryptionManager
-
-    private var shouldEncrypt: Boolean = true
-    private var encryptedData: ByteArray = byteArrayOf()
+    private val encryptionManager by lazy { EncryptionManager(getSecretKeyType()) }
+    private lateinit var encryptionMode: EncryptionMode
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,13 +45,10 @@ class MainActivity : AppCompatActivity() {
                 log("Authentication succeeded [${getAuthenticationType(type)}] - Crypto: $cryptoObject")
 
                 val cipher = cryptoObject?.cipher ?: return
-                if (shouldEncrypt) {
-                    encryptedData = encryptionManager.encrypt(cipher, "Hello world!")
-                    log("Encrypted text: $encryptedData")
-                } else {
-                    log("Decrypted text: ${encryptionManager.decrypt(cipher, encryptedData)}")
+                when (encryptionMode) {
+                    ENCRYPT -> log("Encrypted text: ${encryptionManager.encrypt(cipher)}")
+                    DECRYPT -> log("Decrypted text: ${encryptionManager.decrypt(cipher)}")
                 }
-                shouldEncrypt = !shouldEncrypt
             }
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
@@ -162,8 +159,8 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun authenticateAndEncrypt() {
         val promptInfo = buildPromptInfo() ?: return
-        encryptionManager = EncryptionManager(getSecretKeyType())
         val crypto = encryptionManager.getCryptoToEncrypt()
+        encryptionMode = ENCRYPT
 
         try {
             biometricPrompt.authenticate(promptInfo, crypto)
@@ -181,6 +178,7 @@ class MainActivity : AppCompatActivity() {
             log("Failed to create a crypto object to use for decryption - ${exception.message}")
             return
         }
+        encryptionMode = DECRYPT
 
         try {
             biometricPrompt.authenticate(promptInfo, crypto)

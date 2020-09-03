@@ -16,6 +16,9 @@ class EncryptionManager(private val secretKeyType: Int) {
 
     private lateinit var iv: ByteArray
 
+    private val original = "Payload to encrypt".toByteArray(Charsets.UTF_8)
+    private var encrypted: ByteArray = byteArrayOf()
+
     init {
         // Create and configure a new [KeyGenParameterSpec] instance
         val keyGenParameterSpec = buildKeyGenParamSpec()
@@ -76,9 +79,14 @@ class EncryptionManager(private val secretKeyType: Int) {
         return BiometricPrompt.CryptoObject(cipher)
     }
 
+    fun encrypt(cipher: Cipher): ByteArray {
+        encrypted = cipher.doFinal(original)
+        return encrypted
+    }
+
     @Throws(IllegalStateException::class)
     fun getCryptoToDecrypt(): BiometricPrompt.CryptoObject {
-        if (!::iv.isInitialized) {
+        if (encrypted.isEmpty()) {
             throw IllegalStateException("Must encrypt data before decrypting it")
         }
 
@@ -94,13 +102,12 @@ class EncryptionManager(private val secretKeyType: Int) {
         return BiometricPrompt.CryptoObject(cipher)
     }
 
-    // TODO: Fix bug where encrypt/decrypt/decrypt causes the app to crash
-    fun encrypt(cipher: Cipher, data: String): ByteArray {
-        return cipher.doFinal(data.toByteArray(Charsets.UTF_8))
-    }
+    fun decrypt(cipher: Cipher): String {
+        val decryptedData = cipher.doFinal(encrypted)
 
-    fun decrypt(cipher: Cipher, data: ByteArray): String {
-        val decryptedData = cipher.doFinal(data)
+        // Reset encrypted data to force the user to first encrypt next time
+        encrypted = byteArrayOf()
+
         return String(decryptedData, Charsets.UTF_8)
     }
 
