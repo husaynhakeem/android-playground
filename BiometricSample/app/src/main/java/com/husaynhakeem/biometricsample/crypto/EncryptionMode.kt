@@ -1,4 +1,4 @@
-package com.husaynhakeem.biometricsample
+package com.husaynhakeem.biometricsample.crypto
 
 enum class EncryptionMode {
     ENCRYPT,

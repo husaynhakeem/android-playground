@@ -1,4 +1,4 @@
-package com.husaynhakeem.biometricsample
+package com.husaynhakeem.biometricsample.biometric
 
 import androidx.biometric.BiometricManager.*
 import androidx.biometric.BiometricPrompt.*
