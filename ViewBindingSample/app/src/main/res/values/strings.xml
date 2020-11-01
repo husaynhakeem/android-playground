@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">ViewBindingSample</string>
+    <string name="app_name">ViewBinding Sample</string>
+
+    <!-- Main -->
+    <string name="main_activity_bind_fragment">Bind Fragment</string>
+    <string name="main_activity_inflate_fragment">Inflate Fragment</string>
+
+    <!-- Bind fragment -->
+    <string name="bind_fragment_title">Bind Fragment</string>
+    <string name="bind_fragment_subtitle_landscape">Landscape</string>
+
+    <!-- Inflate fragment -->
+    <string name="inflate_fragment_title">Inflate Fragment</string>
+    <string name="inflate_fragment_subtitle_pre_api_23">Api level %d</string>
 </resources>
