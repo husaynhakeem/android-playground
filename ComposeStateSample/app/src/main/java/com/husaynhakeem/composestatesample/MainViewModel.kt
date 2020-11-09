@@ -11,13 +11,13 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class MainViewModel(private val pokemonRepository: PokemonRepository) : ViewModel() {
 
-    private val _state = MutableLiveData<State>(State.Initial)
+    private val _state = MutableLiveData(State())
     val state: LiveData<State> = _state
 
+    // Todo: Group inside pagination state
     private val currentPage = AtomicInteger(INITIAL_PAGE)
     private val totalPages = AtomicInteger(INITIAL_TOTAL_PAGES)
     private val isQueryInProgress = AtomicBoolean(false)
-    private val allPokemon = mutableListOf<Pokemon>()
 
     fun loadPokemons() {
         // Do not load more pokemons if they have already all been loaded, or if a query is in
@@ -27,7 +27,7 @@ class MainViewModel(private val pokemonRepository: PokemonRepository) : ViewMode
         }
 
         viewModelScope.launch {
-            _state.postValue(State.Loading)
+            _state.postValue(State(getPokemonsFromState(), true))
             isQueryInProgress.set(true)
 
             val pokemonResult = pokemonRepository.getPokemonResultFor(currentPage.get(), PAGE_SIZE)
@@ -37,17 +37,17 @@ class MainViewModel(private val pokemonRepository: PokemonRepository) : ViewMode
             totalPages.set(pokemonResult.totalPages)
 
             // Add list of pokemons from response to current list of pokemons, then update state
-            allPokemon.addAll(pokemonResult.items)
-            _state.postValue(State.Data(allPokemon.toList()))
+            _state.postValue(State(getPokemonsFromState() + pokemonResult.items, false))
 
             isQueryInProgress.set(false)
         }
     }
 
-    sealed class State {
-        object Initial : State()
-        object Loading : State()
-        data class Data(val pokemons: List<Pokemon>) : State()
+    private fun getPokemonsFromState() = _state.value!!.pokemons.toList()
+
+    data class State(val pokemons: List<Pokemon> = emptyList(), val isLoading: Boolean = false) {
+
+        fun isInitialState() = pokemons.isEmpty() && !isLoading
     }
 
     class Factory : ViewModelProvider.Factory {

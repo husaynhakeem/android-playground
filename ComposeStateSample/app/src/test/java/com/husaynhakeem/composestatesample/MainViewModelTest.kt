@@ -32,7 +32,7 @@ class MainViewModelTest {
 
         // Assert
         stateAssert
-            .hasState(State.Initial)
+            .hasState(State())
             .hasNoMoreStates()
     }
 
@@ -51,9 +51,9 @@ class MainViewModelTest {
 
         // Assert
         stateAssert
-            .hasState(State.Initial)
-            .hasState(State.Loading)
-            .hasState(State.Data(allPokemon))
+            .hasState(State())
+            .hasState(State(isLoading = true))
+            .hasState(State(pokemons = allPokemon, isLoading = false))
             .hasNoMoreStates()
     }
 
@@ -85,15 +85,15 @@ class MainViewModelTest {
 
         // Assert
         stateAssert
-            .hasState(State.Initial)
-            .hasState(State.Loading)
-            .hasState(State.Data(allPokemon.subList(0, 10)))
-            .hasState(State.Loading)
-            .hasState(State.Data(allPokemon.subList(0, 20)))
-            .hasState(State.Loading)
-            .hasState(State.Data(allPokemon.subList(0, 30)))
-            .hasState(State.Loading)
-            .hasState(State.Data(allPokemon.subList(0, 34)))
+            .hasState(State())
+            .hasState(State(isLoading = true))
+            .hasState(State(pokemons = allPokemon.subList(0, 10), isLoading = false))
+            .hasState(State(pokemons = allPokemon.subList(0, 10), isLoading = true))
+            .hasState(State(pokemons = allPokemon.subList(0, 20), isLoading = false))
+            .hasState(State(pokemons = allPokemon.subList(0, 20), isLoading = true))
+            .hasState(State(pokemons = allPokemon.subList(0, 30), isLoading = false))
+            .hasState(State(pokemons = allPokemon.subList(0, 30), isLoading = true))
+            .hasState(State(pokemons = allPokemon.subList(0, 34), isLoading = false))
             .hasNoMoreStates()
     }
 
