@@ -7,7 +7,6 @@ import android.hardware.camera2.*
 import android.media.Image
 import android.media.ImageReader
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.coroutineScope
@@ -33,18 +32,6 @@ class CameraFragment : Fragment() {
     /** Current camera */
     private lateinit var camera: CameraDevice
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // Listen to device rotation
-        deviceRotationListener =
-            object : DeviceRotationListener(viewLifecycleOwner, requireContext()) {
-                override fun onRotationChanged(rotation: Int) {
-                    Log.i(TAG, "Device rotation is $rotation")
-                }
-            }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,9 +44,18 @@ class CameraFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Listen to device rotation
+        deviceRotationListener =
+            object : DeviceRotationListener(viewLifecycleOwner, requireContext()) {
+                override fun onRotationChanged(rotation: Int) {
+                    logInfo("Device rotation is $rotation")
+                }
+            }
+
         // Wait for preview surface
         binding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
+                logInfo("Preview surface created: ${holder.surface}")
                 initializeCamera(holder.surface)
             }
 
@@ -69,11 +65,11 @@ class CameraFragment : Fragment() {
                 width: Int,
                 height: Int
             ) {
-                Log.i(TAG, "SurfaceView surface changed: (${width}x${height}, $format)")
+                logInfo("Preview surface changed: ${holder.surface}-(${width}x${height})-$format")
             }
 
             override fun surfaceDestroyed(holder: SurfaceHolder) {
-                Log.i(TAG, "SurfaceView surface destroyed")
+                logInfo("Preview surface destroyed: ${holder.surface}")
             }
         })
     }
@@ -81,6 +77,7 @@ class CameraFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         if (::camera.isInitialized) {
+            logInfo("Closing camera $camera")
             camera.close()
         }
     }
@@ -91,6 +88,7 @@ class CameraFragment : Fragment() {
             // Image capture surface
             val imageReader = ImageReader.newInstance(900, 1600, ImageFormat.JPEG, 3)
             val imageCaptureSurface = imageReader.surface
+            logInfo("Image capture surface created: $imageCaptureSurface-(${imageReader.width}x${imageReader.height})")
 
             // Camera setup
             val cameraManager =
@@ -107,30 +105,35 @@ class CameraFragment : Fragment() {
 
             // Save current camera
             camera = cameraDevice
+            logInfo("Current camera device: $camera")
 
             // Preview setup
             startPreview(session, previewSurface)
+            logInfo("Preview started")
 
             // Image capture setup
             val imageSaver = ImageSaver()
             val exifOrientation = ExifOrientation()
             binding.surfaceView.setOnClickListener {
                 lifecycleScope.launch(Dispatchers.Main) {
+
+                    logInfo("Image capture started")
                     takePicture(session, imageCaptureSurface)
 
                     // Retrieve captured image
                     val capturedImage = imageReader.acquireNextImage()
                     if (capturedImage == null) {
-                        Log.e(TAG, "Captured image is null. Image capture may have failed.")
+                        logError("Captured image is null. Image capture may have failed.")
                     } else {
+                        logInfo("Saving captured image")
                         saveImage(
                             imageSaver,
                             capturedImage,
                             exifOrientation,
-                            deviceRotationListener,
-                            cameraManager,
-                            session
+                            deviceRotationListener.getRotation(),
+                            cameraManager.getCameraCharacteristics(session.device.id)
                         )
+                        capturedImage.close()
                     }
                 }
             }
@@ -167,17 +170,17 @@ class CameraFragment : Fragment() {
         suspendCoroutine<CameraDevice> { continuation ->
             cameraManager.openCamera(cameraId, object : CameraDevice.StateCallback() {
                 override fun onOpened(camera: CameraDevice) {
-                    Log.i(TAG, "Camera device is now open")
+                    logInfo("Camera device is open: $camera")
                     continuation.resume(camera)
                 }
 
                 override fun onDisconnected(camera: CameraDevice) {
-                    Log.i(TAG, "Camera device is now disconnected")
+                    logInfo("Camera device is disconnected: $camera")
                     camera.close()
                 }
 
                 override fun onError(camera: CameraDevice, error: Int) {
-                    Log.e(TAG, "Camera device encountered an error $error")
+                    logError("Camera device encountered an error ($error): $camera")
                     val exception = RuntimeException("Camera $cameraId error: $error")
                     continuation.resumeWithException(exception)
                     camera.close()
@@ -195,10 +198,12 @@ class CameraFragment : Fragment() {
             targets,
             object : CameraCaptureSession.StateCallback() {
                 override fun onConfigured(session: CameraCaptureSession) {
+                    logInfo("Capture session configured")
                     continuation.resume(session)
                 }
 
                 override fun onConfigureFailed(session: CameraCaptureSession) {
+                    logError("Capture session configuration failed")
                     val exception =
                         RuntimeException("Camera capture session configuration failed")
                     continuation.resumeWithException(exception)
@@ -214,7 +219,7 @@ class CameraFragment : Fragment() {
         session.setRepeatingRequest(request.build(), null, null)
     }
 
-    private suspend fun takePicture(session: CameraCaptureSession, imageCaptureSurface: Surface) =
+    private suspend fun takePicture(session: CameraCaptureSession, imageCaptureSurface: Surface) {
         suspendCoroutine<Unit> { continuation ->
             val request = session.device.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE)
             request.addTarget(imageCaptureSurface)
@@ -225,7 +230,7 @@ class CameraFragment : Fragment() {
                     result: TotalCaptureResult
                 ) {
                     super.onCaptureCompleted(session, request, result)
-                    Log.i(TAG, "Image capture complete")
+                    logInfo("Image capture complete")
                     continuation.resume(Unit)
                 }
 
@@ -235,36 +240,38 @@ class CameraFragment : Fragment() {
                     failure: CaptureFailure
                 ) {
                     super.onCaptureFailed(session, request, failure)
-                    Log.i(TAG, "Image capture failed")
-                    continuation.resumeWithException(RuntimeException("Image capture failed: $failure"))
+                    logError("Image capture failed")
+                    val exception = RuntimeException("Image capture failed: $failure")
+                    continuation.resumeWithException(exception)
                 }
             }, null)
         }
+    }
 
     private suspend fun saveImage(
         imageSaver: ImageSaver,
         capturedImage: Image,
         exifOrientation: ExifOrientation,
-        deviceRotationListener: DeviceRotationListener,
-        cameraManager: CameraManager,
-        session: CameraCaptureSession
+        deviceRotation: Int,
+        cameraCharacteristics: CameraCharacteristics,
     ) {
         withContext(Dispatchers.IO) {
             try {
+                logInfo("Saving image to temp file")
                 val tempImage = imageSaver.saveImageToTempFile(capturedImage)
+
+                logInfo("Setting exif orientation to image saved in temp file")
                 exifOrientation.set(
                     tempImage,
-                    deviceRotationListener.getRotation(),
-                    cameraManager.getCameraCharacteristics(session.device.id)
+                    deviceRotation,
+                    cameraCharacteristics
                 )
+
+                logInfo("Saving image to MediaStore")
                 imageSaver.saveImageToMediaStore(requireContext(), tempImage)
             } catch (exception: Exception) {
-                Log.e(TAG, "Failed to save captured image.")
+                logError("Failed to save captured image.")
             }
         }
-    }
-
-    companion object {
-        private const val TAG = "MainActivity"
     }
 }

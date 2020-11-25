@@ -5,7 +5,6 @@ import android.content.Context
 import android.media.Image
 import android.net.Uri
 import android.provider.MediaStore
-import android.util.Log
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -56,7 +55,7 @@ class ImageSaver {
                     outputStream.write(buffer, 0, length)
                 }
             } catch (exception: Exception) {
-                Log.e(TAG, "Error while copying image to media store")
+                throw RuntimeException("Error while copying image to media store")
             }
         }
 
@@ -64,11 +63,8 @@ class ImageSaver {
     }
 
     companion object {
-        private const val TAG = "ImageSaver"
-
         private const val TEMP_FILE_PREFIX = "Camera2Sample"
         private const val TEMP_FILE_SUFFIX = ".tmp"
-
         private const val IMAGE_PREFIX = "Camera2Sample"
         private val IMAGE_URI = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
     }
