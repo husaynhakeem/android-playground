@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.husaynhakeem.camera2sample.PreviewView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/viewfinder"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent">
+
+    <com.husaynhakeem.camera2sample.PreviewView
+        android:id="@+id/viewfinder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageButton
+        android:id="@+id/takePictureButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="32dp"
+        android:background="@null"
+        android:contentDescription="@string/take_picture"
+        android:src="@drawable/icon_take_picture" />
+
+</FrameLayout>

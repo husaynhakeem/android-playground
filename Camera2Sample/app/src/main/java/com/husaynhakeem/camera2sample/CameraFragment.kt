@@ -120,8 +120,8 @@ class CameraFragment : Fragment() {
 
             // Image capture setup
             val imageSaver = ImageSaver()
-            val exifOrientation = ExifOrientation()
-            binding.viewfinder.setOnClickListener {
+            val exifOrientationSetter = ExifOrientationSetter()
+            binding.takePictureButton.setOnClickListener {
                 lifecycleScope.launch(Dispatchers.Main) {
 
                     logInfo("Image capture started")
@@ -136,7 +136,7 @@ class CameraFragment : Fragment() {
                         saveImage(
                             imageSaver,
                             capturedImage,
-                            exifOrientation,
+                            exifOrientationSetter,
                             deviceRotationListener.getRotation(),
                             cameraManager.getCameraCharacteristics(session.device.id)
                         )
@@ -267,7 +267,7 @@ class CameraFragment : Fragment() {
     private suspend fun saveImage(
         imageSaver: ImageSaver,
         capturedImage: Image,
-        exifOrientation: ExifOrientation,
+        exifOrientationSetter: ExifOrientationSetter,
         deviceRotation: Int,
         cameraCharacteristics: CameraCharacteristics,
     ) {
@@ -277,7 +277,7 @@ class CameraFragment : Fragment() {
                 val tempImage = imageSaver.saveImageToTempFile(capturedImage)
 
                 logInfo("Setting exif orientation to image saved in temp file")
-                exifOrientation.set(
+                exifOrientationSetter.set(
                     tempImage,
                     deviceRotation,
                     cameraCharacteristics

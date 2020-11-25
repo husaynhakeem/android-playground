@@ -5,7 +5,7 @@ import android.hardware.camera2.CameraMetadata
 import androidx.exifinterface.media.ExifInterface
 import java.io.File
 
-class ExifOrientation {
+class ExifOrientationSetter {
 
     fun set(image: File, deviceRotation: Int, characteristics: CameraCharacteristics) {
         val imageExifOrientation = computeImageExifOrientation(deviceRotation, characteristics)

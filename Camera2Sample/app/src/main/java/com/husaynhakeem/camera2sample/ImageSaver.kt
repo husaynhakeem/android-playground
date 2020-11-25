@@ -9,6 +9,13 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
+/**
+ * Handles saving the result of image capture.
+ *
+ * The image capture result is an [Image]. It should first be saved in a temporary file in the
+ * temporary-file directory. The correct exif orientation information should then be set on the
+ * temporary file, before finally storing it in [MediaStore].
+ */
 class ImageSaver {
 
     fun saveImageToTempFile(image: Image): File {
