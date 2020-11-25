@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import com.husaynhakeem.camera2sample.databinding.FragmentCameraBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -90,26 +91,28 @@ class CameraFragment : Fragment() {
         }
     }
 
-    private suspend fun awaitPreviewSurface(): Surface = suspendCoroutine { continuation ->
-        binding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
-            override fun surfaceCreated(holder: SurfaceHolder) {
-                continuation.resume(holder.surface)
-            }
+    private suspend fun awaitPreviewSurface(): Surface =
+        suspendCancellableCoroutine { continuation ->
+            binding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
+                override fun surfaceCreated(holder: SurfaceHolder) {
+                    continuation.resume(holder.surface)
+                }
 
-            override fun surfaceChanged(
-                holder: SurfaceHolder,
-                format: Int,
-                width: Int,
-                height: Int
-            ) {
-                Log.i(TAG, "SurfaceView surface changed: (${width}x${height}, $format)")
-            }
+                override fun surfaceChanged(
+                    holder: SurfaceHolder,
+                    format: Int,
+                    width: Int,
+                    height: Int
+                ) {
+                    Log.i(TAG, "SurfaceView surface changed: (${width}x${height}, $format)")
+                }
 
-            override fun surfaceDestroyed(holder: SurfaceHolder) {
-                Log.i(TAG, "SurfaceView surface destroyed")
-            }
-        })
-    }
+                override fun surfaceDestroyed(holder: SurfaceHolder) {
+                    Log.i(TAG, "SurfaceView surface destroyed")
+                    continuation.cancel()
+                }
+            })
+        }
 
     private suspend fun setupCamera(
         cameraManager: CameraManager,
@@ -235,16 +238,19 @@ class CameraFragment : Fragment() {
         sensorRotationListener: SensorRotationListener,
         cameraManager: CameraManager,
         session: CameraCaptureSession
-    ) = withContext(Dispatchers.IO) {
-        try {
-            val savedImage = imageSaver.save(requireContext(), capturedImage)
-            exifOrientation.set(
-                savedImage,
-                sensorRotationListener.getRotation(),
-                cameraManager.getCameraCharacteristics(session.device.id)
-            )
-        } catch (exception: Exception) {
-            Log.e(TAG, "Failed to save captured image.")
+    ) {
+        withContext(Dispatchers.IO) {
+            try {
+                val tempImage = imageSaver.saveImageToTempFile(capturedImage)
+                exifOrientation.set(
+                    tempImage,
+                    sensorRotationListener.getRotation(),
+                    cameraManager.getCameraCharacteristics(session.device.id)
+                )
+                imageSaver.saveImageToMediaStore(requireContext(), tempImage)
+            } catch (exception: Exception) {
+                Log.e(TAG, "Failed to save captured image.")
+            }
         }
     }
 

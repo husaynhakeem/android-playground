@@ -47,6 +47,7 @@ class PermissionsFragment : Fragment() {
 
     companion object {
         private const val PERMISSIONS_REQUEST_CODE = 23
-        private val PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private val PERMISSIONS =
+            arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 }
