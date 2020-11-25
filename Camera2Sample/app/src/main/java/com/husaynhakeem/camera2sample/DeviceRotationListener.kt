@@ -7,7 +7,15 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 
-abstract class SensorRotationListener(
+/**
+ * Observes the device's physical rotation and continually communicates it to its listener. The
+ * emitted rotation value is either 0, 90, 180 or 270.
+ *
+ * [DeviceRotationListener] starts observing the device's rotation when its associated
+ * [lifecycleOwner] starts, stops observing when the [lifecycleOwner] stops and detaches itself
+ * from the [lifecycleOwner] when it's destroyed.
+ */
+abstract class DeviceRotationListener(
     private val lifecycleOwner: LifecycleOwner,
     context: Context
 ) : LifecycleObserver {
@@ -54,9 +62,11 @@ abstract class SensorRotationListener(
         lifecycleOwner.lifecycle.removeObserver(this)
     }
 
+    /** Returns the device's current physical rotation, which is either 0, 90, 180 or 270. */
     fun getRotation(): Int {
         return currentRotation
     }
 
+    /** Invoked when the device's physical orientation changes. */
     abstract fun onRotationChanged(rotation: Int)
 }

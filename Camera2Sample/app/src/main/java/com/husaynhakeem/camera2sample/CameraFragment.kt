@@ -10,11 +10,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import com.husaynhakeem.camera2sample.databinding.FragmentCameraBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -23,6 +23,27 @@ import kotlin.coroutines.suspendCoroutine
 class CameraFragment : Fragment() {
 
     private lateinit var binding: FragmentCameraBinding
+
+    /**
+     * Sensor rotation listener, it's initialized in [onCreate] and uses the Fragment view's
+     * lifecycle to enable/disable observing the device's physical rotation.
+     */
+    private lateinit var deviceRotationListener: DeviceRotationListener
+
+    /** Current camera */
+    private lateinit var camera: CameraDevice
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Listen to device rotation
+        deviceRotationListener =
+            object : DeviceRotationListener(viewLifecycleOwner, requireContext()) {
+                override fun onRotationChanged(rotation: Int) {
+                    Log.i(TAG, "Device rotation is $rotation")
+                }
+            }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,18 +57,36 @@ class CameraFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Sensor rotation listener setup
-        val sensorRotationListener =
-            object : SensorRotationListener(viewLifecycleOwner, requireContext()) {
-                override fun onRotationChanged(rotation: Int) {
-                    Log.i(TAG, "Sensor rotation is now $rotation")
-                }
+        // Wait for preview surface
+        binding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
+            override fun surfaceCreated(holder: SurfaceHolder) {
+                initializeCamera(holder.surface)
             }
 
-        // Camera setup
-        lifecycleScope.launch(Dispatchers.Main) {
-            // Preview surface
-            val previewSurface = awaitPreviewSurface()
+            override fun surfaceChanged(
+                holder: SurfaceHolder,
+                format: Int,
+                width: Int,
+                height: Int
+            ) {
+                Log.i(TAG, "SurfaceView surface changed: (${width}x${height}, $format)")
+            }
+
+            override fun surfaceDestroyed(holder: SurfaceHolder) {
+                Log.i(TAG, "SurfaceView surface destroyed")
+            }
+        })
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (::camera.isInitialized) {
+            camera.close()
+        }
+    }
+
+    private fun initializeCamera(previewSurface: Surface) {
+        viewLifecycleOwner.lifecycle.coroutineScope.launchWhenStarted {
 
             // Image capture surface
             val imageReader = ImageReader.newInstance(900, 1600, ImageFormat.JPEG, 3)
@@ -56,11 +95,18 @@ class CameraFragment : Fragment() {
             // Camera setup
             val cameraManager =
                 requireContext().getSystemService(Context.CAMERA_SERVICE) as CameraManager
-            val session = setupCamera(
+            val compatibleCameraIds = getCompatibleCameraIds(cameraManager)
+            val cameraId = getCameraIdsFacing(
                 cameraManager,
-                LensFacing.BACK,
-                listOf(previewSurface, imageCaptureSurface)
-            )
+                compatibleCameraIds,
+                LensFacing.BACK
+            ).firstOrNull() ?: throw RuntimeException("No valid camera id found")
+            val cameraDevice = awaitCameraDevice(cameraManager, cameraId)
+            val session =
+                awaitCaptureSession(cameraDevice, listOf(previewSurface, imageCaptureSurface))
+
+            // Save current camera
+            camera = cameraDevice
 
             // Preview setup
             startPreview(session, previewSurface)
@@ -81,7 +127,7 @@ class CameraFragment : Fragment() {
                             imageSaver,
                             capturedImage,
                             exifOrientation,
-                            sensorRotationListener,
+                            deviceRotationListener,
                             cameraManager,
                             session
                         )
@@ -89,42 +135,6 @@ class CameraFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private suspend fun awaitPreviewSurface(): Surface =
-        suspendCancellableCoroutine { continuation ->
-            binding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
-                override fun surfaceCreated(holder: SurfaceHolder) {
-                    continuation.resume(holder.surface)
-                }
-
-                override fun surfaceChanged(
-                    holder: SurfaceHolder,
-                    format: Int,
-                    width: Int,
-                    height: Int
-                ) {
-                    Log.i(TAG, "SurfaceView surface changed: (${width}x${height}, $format)")
-                }
-
-                override fun surfaceDestroyed(holder: SurfaceHolder) {
-                    Log.i(TAG, "SurfaceView surface destroyed")
-                    continuation.cancel()
-                }
-            })
-        }
-
-    private suspend fun setupCamera(
-        cameraManager: CameraManager,
-        lensFacing: LensFacing,
-        surfaces: List<Surface>
-    ): CameraCaptureSession {
-        val compatibleCameraIds = getCompatibleCameraIds(cameraManager)
-        val cameraId =
-            getCameraIdsFacing(cameraManager, compatibleCameraIds, lensFacing).firstOrNull()
-                ?: throw RuntimeException("No valid camera id found")
-        val cameraDevice = awaitCameraDevice(cameraManager, cameraId)
-        return awaitCaptureSession(cameraDevice, surfaces)
     }
 
     private fun getCompatibleCameraIds(cameraManager: CameraManager): List<String> {
@@ -235,7 +245,7 @@ class CameraFragment : Fragment() {
         imageSaver: ImageSaver,
         capturedImage: Image,
         exifOrientation: ExifOrientation,
-        sensorRotationListener: SensorRotationListener,
+        deviceRotationListener: DeviceRotationListener,
         cameraManager: CameraManager,
         session: CameraCaptureSession
     ) {
@@ -244,7 +254,7 @@ class CameraFragment : Fragment() {
                 val tempImage = imageSaver.saveImageToTempFile(capturedImage)
                 exifOrientation.set(
                     tempImage,
-                    sensorRotationListener.getRotation(),
+                    deviceRotationListener.getRotation(),
                     cameraManager.getCameraCharacteristics(session.device.id)
                 )
                 imageSaver.saveImageToMediaStore(requireContext(), tempImage)
