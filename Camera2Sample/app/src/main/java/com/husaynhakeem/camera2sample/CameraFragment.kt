@@ -7,6 +7,7 @@ import android.hardware.camera2.*
 import android.media.Image
 import android.media.ImageReader
 import android.os.Bundle
+import android.util.Size
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.coroutineScope
@@ -53,7 +54,7 @@ class CameraFragment : Fragment() {
             }
 
         // Wait for preview surface
-        binding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
+        binding.viewfinder.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
                 logInfo("Preview surface created: ${holder.surface}")
                 initializeCamera(holder.surface)
@@ -99,6 +100,12 @@ class CameraFragment : Fragment() {
                 compatibleCameraIds,
                 LensFacing.BACK
             ).firstOrNull() ?: throw RuntimeException("No valid camera id found")
+
+            // Set viewfinder size
+            val previewResolution = getHighestPreviewResolution(cameraId, cameraManager)
+            binding.viewfinder.previewResolution = previewResolution
+
+            // Start capture session
             val cameraDevice = awaitCameraDevice(cameraManager, cameraId)
             val session =
                 awaitCaptureSession(cameraDevice, listOf(previewSurface, imageCaptureSurface))
@@ -114,7 +121,7 @@ class CameraFragment : Fragment() {
             // Image capture setup
             val imageSaver = ImageSaver()
             val exifOrientation = ExifOrientation()
-            binding.surfaceView.setOnClickListener {
+            binding.viewfinder.setOnClickListener {
                 lifecycleScope.launch(Dispatchers.Main) {
 
                     logInfo("Image capture started")
@@ -163,6 +170,15 @@ class CameraFragment : Fragment() {
             val characteristics = cameraManager.getCameraCharacteristics(cameraId)
             characteristics.get(CameraCharacteristics.LENS_FACING) == camera2LensFacing
         }
+    }
+
+    private fun getHighestPreviewResolution(cameraId: String, cameraManager: CameraManager): Size {
+        return cameraManager.getCameraCharacteristics(cameraId)
+            .get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
+            ?.getOutputSizes(SurfaceHolder::class.java)
+            ?.sortedWith(compareBy { size -> size.width * size.height })
+            ?.last()
+            ?: throw RuntimeException("Unable to get preview resolution")
     }
 
     @SuppressLint("MissingPermission")
