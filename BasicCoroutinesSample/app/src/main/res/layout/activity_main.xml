@@ -56,6 +56,7 @@
             android:id="@+id/sequentialRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="@string/label_run_jobs_sequentially" />
 
         <Space
@@ -75,9 +76,10 @@
         android:layout_height="@dimen/sections_spacing" />
 
     <Button
+        android:id="@+id/startOrCancelJobsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        tools:text="@string/label_start_jobs" />
+        android:text="@string/label_start_jobs" />
 
 </LinearLayout>
