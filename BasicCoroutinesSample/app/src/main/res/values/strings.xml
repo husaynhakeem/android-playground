@@ -1,0 +1,10 @@
+<resources>
+  <string name="app_name">Basic Coroutines Sample</string>
+  <string name="label_job_1">Job #1</string>
+  <string name="label_job_2">Job #2</string>
+  <string name="label_run_jobs_concurrently">Concurrently</string>
+  <string name="label_run_jobs_sequentially">Sequentially</string>
+  <string name="label_run_jobs">Run jobs</string>
+  <string name="label_start_jobs">Start Jobs</string>
+  <string name="label_cancel_jobs">Cancel Jobs</string>
+</resources>
