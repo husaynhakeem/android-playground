@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">DataStoreSample</string>
+    <string name="app_name">DataStore Sample</string>
+    <string name="menu_item_day_night_mode">Day/Night mode</string>
 </resources>
