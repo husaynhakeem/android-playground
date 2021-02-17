@@ -10,8 +10,16 @@ class MainViewModel : ViewModel() {
     val isNightModeEnabled: LiveData<Boolean>
         get() = _isNightModeEnabled
 
+    private val _person = MutableLiveData<Person>()
+    val person: LiveData<Person>
+        get() = _person
+
     fun toggleDayNightMode() {
         val isEnabled = _isNightModeEnabled.value!!
         _isNightModeEnabled.value = !isEnabled
+    }
+
+    fun savePerson(person: Person) {
+        // TODO: Implement save person
     }
 }
