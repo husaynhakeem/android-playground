@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     private fun setUpViewModel() {
         viewModel = ViewModelProvider(
             this,
-            ViewModelProvider.NewInstanceFactory()
+            ViewModelProvider.AndroidViewModelFactory(application)
         ).get(MainViewModel::class.java)
 
         // Observe day/night mode changes
