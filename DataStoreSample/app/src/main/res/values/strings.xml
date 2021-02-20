@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">DataStore Sample</string>
+    <string name="menu_item_day_night_mode">Day/Night mode</string>
+
+    <!-- Login screen -->
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="label_login">Login</string>
+
+    <!-- Logout screen -->
+    <string name="label_logout">Logout</string>
+    <string name="label_greeting">Hello user#%d!\nYour secret token is %s</string>
+</resources>
