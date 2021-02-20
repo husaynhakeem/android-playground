@@ -1,22 +1,20 @@
 package com.husaynhakeem.datastoresample.login
 
 import android.content.Context
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.husaynhakeem.datastoresample.ServiceLocator
 import com.husaynhakeem.datastoresample.data.UserDataStore
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val userDataStore: UserDataStore) : ViewModel() {
-
-    private val _openHomeScreen = MutableLiveData<Boolean>()
-    val openHomeScreen: LiveData<Boolean>
-        get() = _openHomeScreen
 
     fun login(username: String, password: String) {
         viewModelScope.launch {
             val id = generateIdFrom(username, password)
             val token = generateTokenFrom(username, password)
             userDataStore.storeUser(id, token)
-            _openHomeScreen.postValue(true)
         }
     }
 
@@ -38,7 +36,7 @@ class LoginViewModel(private val userDataStore: UserDataStore) : ViewModel() {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val userDataStore = UserDataStore(context)
+            val userDataStore = ServiceLocator.getUserDataStore(context)
             return LoginViewModel(userDataStore) as T
         }
     }

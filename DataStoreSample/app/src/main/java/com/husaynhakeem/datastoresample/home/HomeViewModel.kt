@@ -2,6 +2,7 @@ package com.husaynhakeem.datastoresample.home
 
 import android.content.Context
 import androidx.lifecycle.*
+import com.husaynhakeem.datastoresample.ServiceLocator
 import com.husaynhakeem.datastoresample.User
 import com.husaynhakeem.datastoresample.data.UserDataStore
 import kotlinx.coroutines.flow.first
@@ -13,10 +14,6 @@ class HomeViewModel(private val userDataStore: UserDataStore) : ViewModel() {
     val user: LiveData<User>
         get() = _user
 
-    private val _openLoginScreen = MutableLiveData<Boolean>()
-    val openLoginScreen: LiveData<Boolean>
-        get() = _openLoginScreen
-
     init {
         viewModelScope.launch {
             val user = userDataStore.getUser().first()
@@ -27,7 +24,6 @@ class HomeViewModel(private val userDataStore: UserDataStore) : ViewModel() {
     fun logout() {
         viewModelScope.launch {
             userDataStore.removeUser()
-            _openLoginScreen.postValue(true)
         }
     }
 
@@ -35,7 +31,7 @@ class HomeViewModel(private val userDataStore: UserDataStore) : ViewModel() {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val userDataStore = UserDataStore(context)
+            val userDataStore = ServiceLocator.getUserDataStore(context)
             return HomeViewModel(userDataStore) as T
         }
     }

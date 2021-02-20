@@ -6,11 +6,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.husaynhakeem.datastoresample.data.NightModePreference
+import com.husaynhakeem.datastoresample.data.UserDataStore
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val nightModePreference: NightModePreference) : ViewModel() {
+class MainViewModel(
+    private val nightModePreference: NightModePreference,
+    userDataStore: UserDataStore
+) : ViewModel() {
 
     val isNightModeEnabled = nightModePreference.isNightModeEnable().asLiveData()
+    val isUserLoggedIn = userDataStore.getUser()
+        .map { it.token.isNotBlank() }
+        .asLiveData()
 
     fun toggleDayNightMode() {
         viewModelScope.launch {
@@ -22,8 +30,9 @@ class MainViewModel(private val nightModePreference: NightModePreference) : View
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val nightModePreference = NightModePreference(context)
-            return MainViewModel(nightModePreference) as T
+            val nightModePreference = ServiceLocator.getNightModePreference(context)
+            val userDataStore = ServiceLocator.getUserDataStore(context)
+            return MainViewModel(nightModePreference, userDataStore) as T
         }
     }
 }

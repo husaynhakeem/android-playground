@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.husaynhakeem.datastoresample.R
 import com.husaynhakeem.datastoresample.databinding.FragmentHomeBinding
-import com.husaynhakeem.datastoresample.login.LoginFragment
 
 class HomeFragment : Fragment() {
 
@@ -45,22 +44,8 @@ class HomeFragment : Fragment() {
             binding.greeting.text = getString(R.string.label_greeting, user.id, user.token)
         })
 
-        viewModel.openLoginScreen.observe(viewLifecycleOwner, { openLoginScreen ->
-            if (openLoginScreen == true) {
-                openLoginScreen()
-            }
-        })
-
         binding.logoutButton.setOnClickListener {
             viewModel.logout()
         }
-    }
-
-    private fun openLoginScreen() {
-        requireActivity()
-            .supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.container, LoginFragment())
-            .commitNow()
     }
 }

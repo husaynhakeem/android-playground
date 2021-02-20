@@ -8,7 +8,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.husaynhakeem.datastoresample.databinding.ActivityMainBinding
-import com.husaynhakeem.datastoresample.home.HomeViewModel
+import com.husaynhakeem.datastoresample.home.HomeFragment
+import com.husaynhakeem.datastoresample.login.LoginFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpViewModel() {
-        val factory = HomeViewModel.Factory(this)
+        val factory = MainViewModel.Factory(this)
         viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
 
         // Observe day/night mode changes
@@ -58,5 +59,28 @@ class MainActivity : AppCompatActivity() {
             }
             AppCompatDelegate.setDefaultNightMode(mode)
         })
+
+        // Observe user status to update content
+        viewModel.isUserLoggedIn.observe(this, { isUserLoggedIn ->
+            if (isUserLoggedIn == true) {
+                openHomeScreen()
+            } else {
+                openLoginScreen()
+            }
+        })
+    }
+
+    private fun openLoginScreen() {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, LoginFragment())
+            .commitNow()
+    }
+
+    private fun openHomeScreen() {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, HomeFragment())
+            .commitNow()
     }
 }

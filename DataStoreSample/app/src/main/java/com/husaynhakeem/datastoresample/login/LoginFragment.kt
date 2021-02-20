@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.husaynhakeem.datastoresample.R
 import com.husaynhakeem.datastoresample.databinding.FragmentLoginBinding
-import com.husaynhakeem.datastoresample.home.HomeFragment
 
 class LoginFragment : Fragment() {
 
@@ -37,12 +35,6 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.openHomeScreen.observe(viewLifecycleOwner, { openHomeScreen ->
-            if (openHomeScreen == true) {
-                openHomeScreen()
-            }
-        })
-
         binding.loginButton.setOnClickListener {
             if (binding.username.text.toString().isBlank()) {
                 displayError("Username must not be blank")
@@ -56,14 +48,6 @@ class LoginFragment : Fragment() {
 
             viewModel.login(binding.username.text.toString(), binding.password.text.toString())
         }
-    }
-
-    private fun openHomeScreen() {
-        requireActivity()
-            .supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.container, HomeFragment())
-            .commitNow()
     }
 
     private fun displayError(message: String) {
