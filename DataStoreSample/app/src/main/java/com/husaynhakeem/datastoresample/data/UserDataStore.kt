@@ -23,4 +23,12 @@ class UserDataStore(context: Context) {
                 .build()
         }
     }
+
+    suspend fun removeUser() {
+        dataStore.updateData { user ->
+            user.toBuilder()
+                .clear()
+                .build()
+        }
+    }
 }

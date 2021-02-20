@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.husaynhakeem.datastoresample.R
 import com.husaynhakeem.datastoresample.databinding.FragmentLoginBinding
+import com.husaynhakeem.datastoresample.home.HomeFragment
 
 class LoginFragment : Fragment() {
 
@@ -61,7 +62,7 @@ class LoginFragment : Fragment() {
         requireActivity()
             .supportFragmentManager
             .beginTransaction()
-            .replace(R.id.container, null)
+            .replace(R.id.container, HomeFragment())
             .commitNow()
     }
 

@@ -1,20 +1,13 @@
 <resources>
     <string name="app_name">DataStore Sample</string>
     <string name="menu_item_day_night_mode">Day/Night mode</string>
-    <string name="title_full_name_title">Full Name</string>
-    <string name="hint_full_name">First name</string>
-    <string name="hint_first_name">First name</string>
-    <string name="hint_last_name">Last name</string>
-    <string name="title_address">Address</string>
-    <string name="hint_address_street">123 Street St</string>
-    <string name="hint_address_city">City</string>
-    <string name="hint_address_zip_code">Zip code</string>
-    <string name="hint_address_country">Country</string>
-    <string name="title_phone_number">Phone number</string>
-    <string name="hint_phone_number_country_code">+1</string>
-    <string name="hint_phone_number">123-456-8910</string>
-    <string name="button_save_label">Save data</string>
+
+    <!-- Login screen -->
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
     <string name="label_login">Login</string>
+
+    <!-- Logout screen -->
+    <string name="label_logout">Logout</string>
+    <string name="label_greeting">Hello user#%d!\nYour secret token is %s</string>
 </resources>
