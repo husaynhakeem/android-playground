@@ -14,4 +14,7 @@
     <string name="hint_phone_number_country_code">+1</string>
     <string name="hint_phone_number">123-456-8910</string>
     <string name="button_save_label">Save data</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="label_login">Login</string>
 </resources>
