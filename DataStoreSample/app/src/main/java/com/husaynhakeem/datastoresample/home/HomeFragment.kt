@@ -18,6 +18,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
 
         // Set up viewModel
         val factory = HomeViewModel.Factory(requireContext())
