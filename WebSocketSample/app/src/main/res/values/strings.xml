@@ -6,4 +6,5 @@
     <string name="connection_state_disconnected">Socket connection:\nDisconnected</string>
     <string name="connection_start">Start</string>
     <string name="connection_stop">Stop</string>
+    <string name="price_label">Bitcoin Price</string>
 </resources>
