@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">WebSocketSample</string>
+    <string name="app_name">WebSocket Sample</string>
+    <string name="connection_state_connecting">Socket connection:\nConnecting…</string>
+    <string name="connection_state_connected">Socket connection:\nConnected</string>
+    <string name="connection_state_disconnecting">Socket connection:\nDisconnecting…</string>
+    <string name="connection_state_disconnected">Socket connection:\nDisconnected</string>
+    <string name="connection_start">Start</string>
+    <string name="connection_stop">Stop</string>
 </resources>
