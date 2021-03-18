@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.husaynhakeem.rendereffectsample.MainFragment"
+        android:label="MainFragment">
+        <action
+            android:id="@+id/action_mainFragment_to_blurEffectFragment"
+            app:destination="@id/blurEffectFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_colorFilterEffectFragment"
+            app:destination="@id/colorFilterEffectFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_offsetEffectFragment"
+            app:destination="@id/offsetEffectFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/blurEffectFragment"
+        android:name="com.husaynhakeem.rendereffectsample.BlurEffectFragment"
+        android:label="BlurEffectFragment" />
+
+    <fragment
+        android:id="@+id/colorFilterEffectFragment"
+        android:name="com.husaynhakeem.rendereffectsample.ColorFilterEffectFragment"
+        android:label="ColorFilterEffectFragment" />
+
+    <fragment
+        android:id="@+id/offsetEffectFragment"
+        android:name="com.husaynhakeem.rendereffectsample.OffsetEffectFragment"
+        android:label="OffsetEffectFragment" />
+</navigation>

@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">RenderEffect Sample</string>
+
+    <!-- Selection screen -->
+    <string name="blur_effect_label">Blur Effect</string>
+    <string name="color_filter_effect_label">Color Filter Effect</string>
+    <string name="offset_effect_label">Offset Effect</string>
+
+    <!-- Blur effect -->
+    <string name="render_effect_test_image">Render effect test image</string>
+    <string name="radius_x_label">RadiusX</string>
+    <string name="radius_y_label">RadiusY</string>
+    <string name="tile_modes_label">Tile Modes</string>
+
+    <!-- Color filter effect -->
+    <string name="blend_modes_label">Blend Modes</string>
+    <string name="red_label">R</string>
+    <string name="green_label">G</string>
+    <string name="blue_label">B</string>
+
+    <!-- Offset effect -->
+    <string name="x_label">offsetX</string>
+    <string name="y_label">offsetY</string>
+</resources>

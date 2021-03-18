@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/render_effect_test_image"
+        android:src="@drawable/test_image"
+        app:layout_constraintBottom_toTopOf="@+id/radiusXSlider" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="8dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="8dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/labelsBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:barrierMargin="8dp"
+        app:constraint_referenced_ids="radiusXLabel,radiusYLabel,tileModesLabel" />
+
+    <TextView
+        android:id="@+id/radiusXLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/radius_x_label"
+        app:layout_constraintBottom_toBottomOf="@+id/radiusXSlider"
+        app:layout_constraintStart_toStartOf="@+id/startGuideline"
+        app:layout_constraintTop_toTopOf="@+id/radiusXSlider" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/radiusXSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:valueFrom="0"
+        android:valueTo="100"
+        app:layout_constraintBottom_toTopOf="@+id/radiusYSlider"
+        app:layout_constraintEnd_toEndOf="@+id/endGuideline"
+        app:layout_constraintStart_toEndOf="@+id/labelsBarrier" />
+
+    <TextView
+        android:id="@+id/radiusYLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/radius_y_label"
+        app:layout_constraintBottom_toBottomOf="@+id/radiusYSlider"
+        app:layout_constraintStart_toStartOf="@+id/startGuideline"
+        app:layout_constraintTop_toTopOf="@+id/radiusYSlider" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/radiusYSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:valueFrom="0"
+        android:valueTo="100"
+        app:layout_constraintBottom_toTopOf="@+id/tileModesWrapper"
+        app:layout_constraintEnd_toEndOf="@+id/endGuideline"
+        app:layout_constraintStart_toEndOf="@+id/labelsBarrier" />
+
+    <TextView
+        android:id="@+id/tileModesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tile_modes_label"
+        app:layout_constraintBottom_toBottomOf="@+id/tileModesWrapper"
+        app:layout_constraintStart_toStartOf="@+id/startGuideline"
+        app:layout_constraintTop_toTopOf="@+id/tileModesWrapper" />
+
+    <HorizontalScrollView
+        android:id="@+id/tileModesWrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/labelsBarrier">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/tileModes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:chipSpacingHorizontal="16dp"
+            app:selectionRequired="true"
+            app:singleLine="true"
+            app:singleSelection="true" />
+
+    </HorizontalScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
