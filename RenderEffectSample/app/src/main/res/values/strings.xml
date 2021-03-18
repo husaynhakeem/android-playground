@@ -4,6 +4,7 @@
     <!-- Selection screen -->
     <string name="blur_effect_label">Blur Effect</string>
     <string name="color_filter_effect_label">Color Filter Effect</string>
+    <string name="offset_effect_label">Offset Effect</string>
 
     <!-- Blur effect -->
     <string name="tile_mode_clamp">Clamp</string>
@@ -20,4 +21,8 @@
     <string name="red_label">R</string>
     <string name="green_label">G</string>
     <string name="blue_label">B</string>
+
+    <!-- Offset effect -->
+    <string name="x_label">offsetX</string>
+    <string name="y_label">offsetY</string>
 </resources>

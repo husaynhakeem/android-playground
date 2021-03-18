@@ -30,6 +30,8 @@ class MainFragment : Fragment() {
         binding.colorFilterEffectButton.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_colorFilterEffectFragment)
         }
-
+        binding.offsetEffectButton.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_offsetEffectFragment)
+        }
     }
 }
