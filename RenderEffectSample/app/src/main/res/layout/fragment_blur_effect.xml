@@ -88,7 +88,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/endGuideline"
         app:layout_constraintStart_toEndOf="@+id/labelsBarrier">
 
         <com.google.android.material.chip.ChipGroup

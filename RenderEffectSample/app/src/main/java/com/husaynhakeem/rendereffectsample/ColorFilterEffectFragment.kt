@@ -6,24 +6,33 @@ import android.graphics.Color
 import android.graphics.RenderEffect
 import android.os.Bundle
 import android.view.Gravity
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.slider.Slider
-import com.husaynhakeem.rendereffectsample.databinding.ActivityColorFilterEffectBinding
+import com.husaynhakeem.rendereffectsample.databinding.FragmentColorFilterEffectBinding
 
-class ColorFilterEffectActivity : AppCompatActivity() {
+class ColorFilterEffectFragment : Fragment() {
 
-    private lateinit var binding: ActivityColorFilterEffectBinding
+    private lateinit var binding: FragmentColorFilterEffectBinding
     private var red: Int = 127
     private var green: Int = 127
     private var blue: Int = 127
     private var blendMode: BlendMode = BlendMode.COLOR
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentColorFilterEffectBinding.inflate(layoutInflater)
+        return binding.root
+    }
 
-        binding = ActivityColorFilterEffectBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Set sliders initial values
         binding.redSlider.value = red.toFloat()
@@ -59,7 +68,7 @@ class ColorFilterEffectActivity : AppCompatActivity() {
         chip.gravity = Gravity.CENTER
         chip.isChecked = isChecked
         chip.setOnClickListener {
-            this@ColorFilterEffectActivity.blendMode = this
+            this@ColorFilterEffectFragment.blendMode = this
             updateRenderEffect()
         }
         return chip

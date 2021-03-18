@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">RenderEffect Sample</string>
 
+    <!-- Selection screen -->
+    <string name="blur_effect_label">Blur Effect</string>
+    <string name="color_filter_effect_label">Color Filter Effect</string>
+
     <!-- Blur effect -->
     <string name="tile_mode_clamp">Clamp</string>
     <string name="tile_mode_decal">Decal</string>

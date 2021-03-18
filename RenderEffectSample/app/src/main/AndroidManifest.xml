@@ -10,7 +10,7 @@
         android:theme="@style/Theme.RenderEffectSample"
         tools:ignore="AllowBackup,MissingApplicationIcon">
         <activity
-            android:name=".ColorFilterEffectActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
