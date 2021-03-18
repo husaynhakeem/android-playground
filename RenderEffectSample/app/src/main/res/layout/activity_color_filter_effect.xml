@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/render_effect_test_image"
+        android:src="@drawable/test_image"
+        app:layout_constraintBottom_toTopOf="@+id/color" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="8dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="8dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/labelsBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:barrierMargin="8dp"
+        app:constraint_referenced_ids="color,blendModesLabel" />
+
+    <View
+        android:id="@+id/color"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:layout_constraintBottom_toBottomOf="@+id/redLabel"
+        app:layout_constraintEnd_toEndOf="@+id/labelsBarrier"
+        app:layout_constraintTop_toTopOf="@+id/redLabel" />
+
+    <TextView
+        android:id="@+id/redLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/red_label"
+        app:layout_constraintBottom_toBottomOf="@id/redSlider"
+        app:layout_constraintEnd_toStartOf="@id/redSlider"
+        app:layout_constraintStart_toEndOf="@+id/labelsBarrier"
+        app:layout_constraintTop_toTopOf="@id/redSlider" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/redSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:valueFrom="0"
+        android:valueTo="255"
+        app:layout_constraintBottom_toTopOf="@+id/blendModesWrapper"
+        app:layout_constraintEnd_toStartOf="@+id/greenLabel"
+        app:layout_constraintStart_toEndOf="@+id/redLabel" />
+
+    <TextView
+        android:id="@+id/greenLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/green_label"
+        app:layout_constraintBottom_toBottomOf="@id/greenSlider"
+        app:layout_constraintEnd_toStartOf="@id/greenSlider"
+        app:layout_constraintStart_toEndOf="@+id/redSlider"
+        app:layout_constraintTop_toTopOf="@id/greenSlider" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/greenSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:valueFrom="0"
+        android:valueTo="255"
+        app:layout_constraintBottom_toTopOf="@+id/blendModesWrapper"
+        app:layout_constraintEnd_toStartOf="@+id/blueLabel"
+        app:layout_constraintStart_toEndOf="@+id/greenLabel" />
+
+    <TextView
+        android:id="@+id/blueLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/blue_label"
+        app:layout_constraintBottom_toBottomOf="@id/blueSlider"
+        app:layout_constraintEnd_toStartOf="@id/blueSlider"
+        app:layout_constraintStart_toEndOf="@+id/greenSlider"
+        app:layout_constraintTop_toTopOf="@id/blueSlider" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/blueSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:valueFrom="0"
+        android:valueTo="255"
+        app:layout_constraintBottom_toTopOf="@+id/blendModesWrapper"
+        app:layout_constraintEnd_toEndOf="@+id/endGuideline"
+        app:layout_constraintStart_toEndOf="@+id/blueLabel" />
+
+    <TextView
+        android:id="@+id/blendModesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/blend_modes_label"
+        app:layout_constraintBottom_toBottomOf="@+id/blendModesWrapper"
+        app:layout_constraintStart_toStartOf="@+id/startGuideline"
+        app:layout_constraintTop_toTopOf="@+id/blendModesWrapper" />
+
+    <HorizontalScrollView
+        android:id="@+id/blendModesWrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/labelsBarrier">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/blendModes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:chipSpacingHorizontal="16dp"
+            app:selectionRequired="true"
+            app:singleLine="true"
+            app:singleSelection="true" />
+
+    </HorizontalScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
