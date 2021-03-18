@@ -98,37 +98,7 @@
             app:chipSpacingHorizontal="16dp"
             app:selectionRequired="true"
             app:singleLine="true"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/clampTileMode"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tile_mode_clamp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/decalTileMode"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tile_mode_decal" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/mirrorTileMode"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tile_mode_mirror" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/repeatTileMode"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tile_mode_repeat" />
-
-        </com.google.android.material.chip.ChipGroup>
+            app:singleSelection="true" />
 
     </HorizontalScrollView>
 

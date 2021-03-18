@@ -7,10 +7,6 @@
     <string name="offset_effect_label">Offset Effect</string>
 
     <!-- Blur effect -->
-    <string name="tile_mode_clamp">Clamp</string>
-    <string name="tile_mode_decal">Decal</string>
-    <string name="tile_mode_mirror">Mirror</string>
-    <string name="tile_mode_repeat">Repeat</string>
     <string name="render_effect_test_image">Render effect test image</string>
     <string name="radius_x_label">RadiusX</string>
     <string name="radius_y_label">RadiusY</string>

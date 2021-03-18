@@ -38,7 +38,9 @@ class OffsetEffectFragment : Fragment() {
             .addOnGlobalLayoutListener(object :
                 ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
+                    binding.offsetXSlider.valueFrom = -binding.imageView.width.toFloat()
                     binding.offsetXSlider.valueTo = binding.imageView.width.toFloat()
+                    binding.offsetYSlider.valueFrom = -binding.imageView.height.toFloat()
                     binding.offsetYSlider.valueTo = binding.imageView.height.toFloat()
                     binding.imageView.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
