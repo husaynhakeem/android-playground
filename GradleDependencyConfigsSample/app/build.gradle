@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
+    id "com.android.application"
+    id "kotlin-android"
 }
 
 android {
@@ -14,22 +14,33 @@ android {
         versionName "1.0"
     }
 
-    buildTypes {
-        release {
+    flavorDimensions "appMode"
+    productFlavors {
+        base {
+            dimension "appMode"
+            manifestPlaceholders = [appName: "@string/app_name_base"]
         }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
+        other {
+            dimension "appMode"
+            manifestPlaceholders = [appName: "@string/app_name_other"]
+        }
     }
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    implementation "androidx.core:core-ktx:1.6.0"
+    implementation "androidx.appcompat:appcompat:1.3.1"
+    implementation "com.google.android.material:material:1.4.0"
+
+    // The module "compileonly" should only be used at compilation time, one of its implementations
+    // "runtimeonly" and "otherruntimeonly" should be used at runtime.
+    compileOnly project(":compileonly")
+
+    // this is the Gradle dependency configuration "runtimeOnly" applied to the "base" flavor, i.e.
+    // when building the base flavor, the module "runtimeonly" should only be included for runtime.
+    baseRuntimeOnly project(":runtimeonly")
+
+    // this is the Gradle dependency configuration "runtimeOnly" applied to the "other" flavor, i.e.
+    // when building the other flavor, the module "otherruntimeonly" should only be included for runtime.
+    otherRuntimeOnly project(":otherruntimeonly")
 }
