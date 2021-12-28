@@ -25,14 +25,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     @Suppress("ConvertCallChainIntoSequence")
-    suspend fun getAppWidgets(context: Context): List<Widget> {
+    private suspend fun getAppWidgets(context: Context): List<Widget> {
         val manager = GlanceAppWidgetManager(context)
         return AppWidgetManager.getInstance(context)
+            // Get all the installed widget providers
             .installedProviders
+            // Filter only this app's widgets providers
             .filter { widgetProviderInfo -> widgetProviderInfo.provider.packageName == context.packageName }
+            // Get this app's widget provider classes
             .mapNotNull { widgetProviderInfo -> Class.forName(widgetProviderInfo.provider.className) }
+            // Filter only glance widget providers
             .filter { GlanceAppWidgetReceiver::class.java.isAssignableFrom(it) }
+            // Get each widget provider's widget
             .map { (it.newInstance() as GlanceAppWidgetReceiver).glanceAppWidget.javaClass }
+            // Convert each widget to a UI model
             .map {
                 val metadata = manager.getGlanceIds(it)
                     .map { id ->
