@@ -41,7 +41,9 @@ class ListWidget : GlanceAppWidget() {
 
     @Composable
     override fun Content() {
-        LazyColumn {
+        LazyColumn(
+            modifier = GlanceModifier.padding(8.dp)
+        ) {
             items(items) { item ->
                 Text(
                     text = item,
