@@ -34,7 +34,7 @@ class ErrorUIWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_cus
     }
 
     // When the widget is resized to a size larger than `maxSize`, an error is triggered.
-    private val maxSize = DpSize(200.dp, 200.dp)
+    private val maxSize = DpSize(300.dp, 300.dp)
 }
 
 class ErrorUIWidgetReceiver : GlanceAppWidgetReceiver() {
