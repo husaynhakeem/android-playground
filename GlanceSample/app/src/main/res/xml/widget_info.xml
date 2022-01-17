@@ -3,4 +3,5 @@
     android:initialLayout="@layout/layout_widget_initial"
     android:previewImage="@drawable/ic_something"
     android:resizeMode="vertical|horizontal"
-    android:widgetCategory="home_screen" />
+    android:widgetCategory="home_screen"
+    android:description="@string/hello_world_widget_description"/>

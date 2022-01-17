@@ -1,7 +1,6 @@
 package com.husaynhakeem.glancesample.widget
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.glance.LocalSize
@@ -10,7 +9,8 @@ import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.text.Text
 import com.husaynhakeem.glancesample.R
-import kotlin.math.roundToInt
+import com.husaynhakeem.glancesample.util.isSmallerThan
+import com.husaynhakeem.glancesample.util.readable
 
 class ErrorUIWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_custom_error) {
 
@@ -24,14 +24,6 @@ class ErrorUIWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_cus
         } else {
             androidx.compose.material.Text(text = "error") // Not a glance composable, should error out
         }
-    }
-
-    private fun Dp.readable(): String {
-        return "${value.roundToInt()}dp"
-    }
-
-    private fun DpSize.isSmallerThan(other: DpSize): Boolean {
-        return this.width <= other.width && this.height <= other.height
     }
 
     private val maxSize = DpSize(200.dp, 200.dp)

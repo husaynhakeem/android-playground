@@ -2,6 +2,10 @@
     <string name="app_name">Glance Sample</string>
 
     <string name="hello_world_widget_description">Any description</string>
+    <string name="widget_size_exact_description">Size mode - Exact</string>
+    <string name="widget_size_responsive_description">Size mode - Responsive</string>
+    <string name="widget_size_single_description">Size mode - Single</string>
+
     <string name="error_ui_widget_error_message">Custom error message</string>
     <string name="widget_initial_label_loading">Loading…</string>
 </resources>
