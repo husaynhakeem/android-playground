@@ -146,6 +146,27 @@
                 android:resource="@xml/widget_size_single_info" />
 
         </receiver>
+
+        <!--Interop with remote views-->
+        <receiver
+            android:name=".widget.interop.RemoteViewWidgetProvider"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver
+            android:name=".widget.interop.RemoteViewInteropWidgetReceiver"
+            android:enabled="true"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_interop_info" />
+
+        </receiver>
     </application>
 
 </manifest>

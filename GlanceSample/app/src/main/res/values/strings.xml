@@ -5,7 +5,12 @@
     <string name="widget_size_exact_description">Size mode - Exact</string>
     <string name="widget_size_responsive_description">Size mode - Responsive</string>
     <string name="widget_size_single_description">Size mode - Single</string>
+    <string name="widget_interop_description">Remote views interop</string>
 
     <string name="error_ui_widget_error_message">Custom error message</string>
     <string name="widget_initial_label_loading">Loading…</string>
+
+    <string name="remote_view_text_label">Remote text view</string>
+    <string name="remote_view_button_label">Click me!</string>
+    <string name="remote_view_button_on_click_message">Clicked remote button</string>
 </resources>
