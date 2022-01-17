@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.husaynhakeem.glancesample">
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.GlanceSample">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.GlanceSample.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".widget.action.DummyActivity" />
+
+        <service android:name=".widget.action.DummyService" />
+
+        <receiver android:name=".widget.action.DummyBroadcastReceiver" />
+
+        <!--Glance app widgets receivers-->
+        <receiver
+            android:name=".widget.HelloWorldWidgetReceiver"
+            android:enabled="true"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_hello_world_info" />
+
+        </receiver>
+
+        <receiver
+            android:name=".widget.action.ActionWidgetReceiver"
+            android:enabled="true"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_action_info" />
+
+        </receiver>
+
+        <receiver
+            android:name=".widget.ListWidgetReceiver"
+            android:enabled="true"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_list_info" />
+
+        </receiver>
+
+        <receiver
+            android:name=".widget.ErrorUIWidgetReceiver"
+            android:enabled="true"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_error_ui_info" />
+
+        </receiver>
+
+        <receiver
+            android:name=".widget.StatefulWidgetReceiver"
+            android:enabled="true"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_stateful_info" />
+
+        </receiver>
+
+        <!--Widget.size-->
+        <receiver
+            android:name=".widget.size.SizeExactWidgetReceiver"
+            android:enabled="true"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_size_exact_info" />
+
+        </receiver>
+
+        <receiver
+            android:name=".widget.size.SizeResponsiveWidgetReceiver"
+            android:enabled="true"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_size_responsive_info" />
+
+        </receiver>
+
+        <receiver
+            android:name=".widget.size.SizeSingleWidgetReceiver"
+            android:enabled="true"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_size_single_info" />
+
+        </receiver>
+
+        <!--Interop with remote views-->
+        <receiver
+            android:name=".widget.interop.RemoteViewWidgetProvider"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver
+            android:name=".widget.interop.RemoteViewInteropWidgetReceiver"
+            android:enabled="true"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_interop_info" />
+
+        </receiver>
+    </application>
+
+</manifest>
