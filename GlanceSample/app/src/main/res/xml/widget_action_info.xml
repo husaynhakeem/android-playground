@@ -6,6 +6,6 @@
     android:minHeight="@dimen/widget_min_height"
     android:minResizeWidth="@dimen/widget_min_resize_width"
     android:minResizeHeight="@dimen/widget_min_resize_height"
-    android:previewImage="@drawable/ic_something"
+    android:previewImage="@drawable/ic_action"
     android:resizeMode="vertical|horizontal"
     android:widgetCategory="home_screen" />
