@@ -1,4 +1,4 @@
-package com.husaynhakeem.glancesample.component
+package com.husaynhakeem.glancesample.widget.action
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -10,7 +10,6 @@ import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import com.husaynhakeem.glancesample.ui.theme.GlanceSampleTheme
-import com.husaynhakeem.glancesample.widget.actionWidgetKey
 
 class DummyActivity : AppCompatActivity() {
 

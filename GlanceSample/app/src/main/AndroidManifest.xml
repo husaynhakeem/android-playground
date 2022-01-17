@@ -19,11 +19,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".component.DummyActivity" />
+        <activity android:name=".widget.action.DummyActivity" />
 
-        <service android:name=".component.DummyService" />
+        <service android:name=".widget.action.DummyService" />
 
-        <receiver android:name=".component.DummyBroadcastReceiver" />
+        <receiver android:name=".widget.action.DummyBroadcastReceiver" />
 
         <!--Glance app widgets receivers-->
         <receiver
@@ -37,12 +37,12 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info" />
+                android:resource="@xml/widget_hello_world_info" />
 
         </receiver>
 
         <receiver
-            android:name=".widget.ActionWidgetReceiver"
+            android:name=".widget.action.ActionWidgetReceiver"
             android:enabled="true"
             android:exported="false">
 
@@ -52,7 +52,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info" />
+                android:resource="@xml/widget_action_info" />
 
         </receiver>
 
@@ -67,7 +67,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info" />
+                android:resource="@xml/widget_list_info" />
 
         </receiver>
 
@@ -82,7 +82,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info" />
+                android:resource="@xml/widget_error_ui_info" />
 
         </receiver>
 
@@ -97,7 +97,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info" />
+                android:resource="@xml/widget_stateful_info" />
 
         </receiver>
 

@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Glance Sample</string>
 
-    <string name="hello_world_widget_description">Any description</string>
+    <string name="widget_hello_world_description">Hello World</string>
+    <string name="widget_action_description">Actions</string>
+    <string name="widget_error_ui_description">Error UI</string>
+    <string name="widget_list_description">List</string>
+    <string name="widget_stateful_description">Stateful</string>
     <string name="widget_size_exact_description">Size mode - Exact</string>
     <string name="widget_size_responsive_description">Size mode - Responsive</string>
     <string name="widget_size_single_description">Size mode - Single</string>
