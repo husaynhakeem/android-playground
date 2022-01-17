@@ -7,6 +7,7 @@ import androidx.glance.LocalSize
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.SizeMode
+import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
@@ -34,7 +35,9 @@ class SizeExactWidget : GlanceAppWidget() {
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
-                .padding(8.dp)
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(text = "Exact", style = TextStyle(textDecoration = TextDecoration.Underline))
 
