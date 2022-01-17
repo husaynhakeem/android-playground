@@ -3,14 +3,12 @@ package com.husaynhakeem.glancesample.widget.action
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
+import com.husaynhakeem.glancesample.util.toast
 
 class DummyBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        Toast.makeText(
-            context,
-            "Received broadcast with intent $intent",
-            Toast.LENGTH_SHORT
-        ).show()
+        context?.let {
+            toast(context, "Received broadcast with intent $intent")
+        }
     }
 }

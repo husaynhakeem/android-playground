@@ -17,9 +17,7 @@ import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.currentState
-import androidx.glance.layout.Column
-import androidx.glance.layout.fillMaxWidth
-import androidx.glance.layout.padding
+import androidx.glance.layout.*
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
 import androidx.glance.text.Text
@@ -30,6 +28,19 @@ import androidx.glance.unit.ColorProvider
 private val countPreferenceKey = intPreferencesKey("count-key")
 private val countParamKey = ActionParameters.Key<Int>("count-key")
 
+/**
+ * A [GlanceAppWidget] can store data specific to its UI. To make a widget stateful, provide a
+ * [GlanceStateDefinition], which defines where the widget's data is stored and how the underlying
+ * data store is created. Glance provides [PreferencesGlanceStateDefinition], a state definition
+ * based on [Preferences].
+ *
+ * To get the widget's current state when rendering its UI, use the local composition
+ * [currentState], it returns a [Preferences] instance when you use a
+ * [PreferencesGlanceStateDefinition], then use its APIs to query/save data.
+ *
+ * To update the widget's state, use [updateAppWidgetState], then call [GlanceAppWidget.update] to
+ * refresh the widget's UI.
+ */
 class StatefulWidget : GlanceAppWidget() {
 
     override val stateDefinition: GlanceStateDefinition<*> = PreferencesGlanceStateDefinition
@@ -38,7 +49,10 @@ class StatefulWidget : GlanceAppWidget() {
     override fun Content() {
         val prefs = currentState<Preferences>()
         val count = prefs[countPreferenceKey] ?: 0
-        Column {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             Button(
                 text = "+",
                 modifier = GlanceModifier.fillMaxWidth(),
@@ -48,16 +62,16 @@ class StatefulWidget : GlanceAppWidget() {
                     )
                 )
             )
+            Spacer(modifier = GlanceModifier.padding(8.dp))
             Text(
                 text = count.toString(),
-                modifier = GlanceModifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
+                modifier = GlanceModifier.fillMaxWidth(),
                 style = TextStyle(
                     textAlign = TextAlign.Center,
                     color = ColorProvider(MaterialTheme.colors.onSurface),
                 )
             )
+            Spacer(modifier = GlanceModifier.padding(8.dp))
             Button(
                 text = "-",
                 modifier = GlanceModifier.fillMaxWidth(),
@@ -72,6 +86,7 @@ class StatefulWidget : GlanceAppWidget() {
 }
 
 class UpdateCountActionCallback : ActionCallback {
+
     override suspend fun onRun(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
 
         // Get the new count passed as a parameter

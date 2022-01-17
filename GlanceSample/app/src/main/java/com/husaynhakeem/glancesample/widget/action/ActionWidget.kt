@@ -19,6 +19,9 @@ import androidx.glance.layout.Column
 import androidx.glance.layout.padding
 import com.husaynhakeem.glancesample.util.log
 
+/**
+ * Key to be used with a value of type [String] when constructing [ActionParameters].
+ */
 internal val actionWidgetKey = ActionParameters.Key<String>("action-widget-key")
 
 /**
@@ -31,6 +34,8 @@ internal val actionWidgetKey = ActionParameters.Key<String>("action-widget-key")
  * [ComponentName], [Class] or type.
  * - [actionStartBroadcastReceiver]: Action that launches the broadcast receiver defined by its
  * [ComponentName], [Class] or type.
+ *
+ * When passing parameters to an action, use [actionParametersOf] or [mutableActionParametersOf].
  */
 class ActionWidget : GlanceAppWidget() {
 
@@ -70,6 +75,10 @@ class ActionWidget : GlanceAppWidget() {
     }
 }
 
+/**
+ * Callback used with [actionRunCallback], and executed on user interaction. It must have a public
+ * zero argument constructor since it's instanciated at runtime.
+ */
 class LogActionCallback : ActionCallback {
     override suspend fun onRun(
         context: Context,

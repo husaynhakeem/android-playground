@@ -8,8 +8,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.Handler
 import android.widget.RemoteViews
-import android.widget.Toast
 import com.husaynhakeem.glancesample.R
+import com.husaynhakeem.glancesample.util.toast
 
 private const val REMOTE_BUTTON_CLICK_ACTION = "action-remote-button-click"
 private const val REMOTE_BUTTON_CLICK_REQUEST_CODE = 23
@@ -41,17 +41,22 @@ class RemoteViewWidget(context: Context) :
 
 class RemoteViewWidgetProvider : AppWidgetProvider() {
 
+    private lateinit var handler: Handler
+
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context != null && intent?.action == REMOTE_BUTTON_CLICK_ACTION) {
-            Handler(context.mainLooper).post {
-                Toast.makeText(
-                    context,
-                    R.string.remote_view_button_on_click_message,
-                    Toast.LENGTH_SHORT
-                ).show()
+            getHandler(context).post {
+                toast(context, R.string.remote_view_button_on_click_message)
             }
         } else {
             super.onReceive(context, intent)
         }
+    }
+
+    private fun getHandler(context: Context): Handler {
+        if (!::handler.isInitialized) {
+            handler = Handler(context.mainLooper)
+        }
+        return handler
     }
 }
