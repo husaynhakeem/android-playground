@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Activity Embedding</string>
     <string name="action_settings">Settings</string>
+    <string name="detail_label">Just the letter</string>
+    <string name="activity_list_label">Letters</string>
+    <string name="activity_detail_label">Details</string>
 </resources>
