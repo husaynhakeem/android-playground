@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:window="http://schemas.android.com/apk/res-auto">
+    <SplitPairRule
+        window:finishPrimaryWithSecondary="true"
+        window:finishSecondaryWithPrimary="true"
+        window:splitMinWidth="600dp"
+        window:splitRatio="0.3">
+        <SplitPairFilter
+            window:primaryActivityName=".list.ListActivity"
+            window:secondaryActivityName=".detail.DetailActivity" />
+    </SplitPairRule>
+</resources>
