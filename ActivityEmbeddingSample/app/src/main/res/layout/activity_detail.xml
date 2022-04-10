@@ -21,4 +21,12 @@
         android:textAppearance="@style/TextAppearance.Material3.DisplayLarge"
         tools:text="A" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/shareTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        android:text="@string/label_share" />
+
 </LinearLayout>

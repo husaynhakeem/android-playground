@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.husaynhakeem.activityembeddingsample.databinding.ActivityDetailBinding
+import com.husaynhakeem.activityembeddingsample.share.ShareActivity
 
 class DetailActivity : AppCompatActivity() {
 
@@ -15,12 +16,15 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val letter = getLetter()
-            ?: throw IllegalStateException("Must pass a letter to the details screen")
-        binding.detailTextView.text = getLetter()
+        binding.detailTextView.text = letter
+        binding.shareTextView.setOnClickListener {
+            ShareActivity.openShareScreenFor(letter, this)
+        }
     }
 
-    private fun getLetter(): String? {
+    private fun getLetter(): String {
         return intent.getStringExtra(EXTRA_LETTER)
+            ?: throw IllegalStateException("Must pass a letter to DetailActivity")
     }
 
     companion object {

@@ -23,8 +23,10 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".detail.DetailActivity"
-            android:label="@string/activity_detail_label" />
+        <activity android:name=".detail.DetailActivity" />
+
+        <activity android:name=".detail.DetailPlaceholderActivity" />
+
+        <activity android:name=".share.ShareActivity" />
     </application>
 </manifest>
