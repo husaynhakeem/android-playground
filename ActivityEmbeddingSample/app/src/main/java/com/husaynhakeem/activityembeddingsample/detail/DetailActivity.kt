@@ -4,15 +4,24 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.husaynhakeem.activityembeddingsample.FABProvider
+import com.husaynhakeem.activityembeddingsample.FABSplitListener
 import com.husaynhakeem.activityembeddingsample.databinding.ActivityDetailBinding
 import com.husaynhakeem.activityembeddingsample.share.ShareActivity
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), FABProvider {
+
+    private lateinit var binding: ActivityDetailBinding
+
+    init {
+        lifecycle.addObserver(FABSplitListener(this))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityDetailBinding.inflate(layoutInflater)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val letter = getLetter()
@@ -26,6 +35,10 @@ class DetailActivity : AppCompatActivity() {
         return intent.getStringExtra(EXTRA_LETTER)
             ?: throw IllegalStateException("Must pass a letter to DetailActivity")
     }
+
+    // FABProvider
+    override val fab: FloatingActionButton by lazy { binding.detailFAB }
+    override val activity: AppCompatActivity = this
 
     companion object {
         private const val EXTRA_LETTER = "extra-letter"
