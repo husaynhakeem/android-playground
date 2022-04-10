@@ -12,7 +12,7 @@ class LettersAdapter(private val onItemClickListener: (String) -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemListBinding.inflate(inflater)
+        val binding = ItemListBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 

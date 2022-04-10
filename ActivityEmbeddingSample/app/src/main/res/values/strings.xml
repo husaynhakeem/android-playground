@@ -5,5 +5,5 @@
     <string name="activity_list_label">Letters</string>
     <string name="detail_placeholder_label">Select a letter</string>
     <string name="label_share"><u>Share</u></string>
-    <string name="label_sharing">Sharing the letter %s with people around you…</string>
+    <string name="label_sharing">Sending the letter %s to people nearby by telepathy</string>
 </resources>
