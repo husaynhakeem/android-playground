@@ -7,4 +7,5 @@
     <string name="label_share"><u>Share</u></string>
     <string name="label_sharing">Sending the letter %s to people nearby by telepathy</string>
     <string name="content_description_fab">Random button</string>
+    <string name="split_not_supported">Split is not supported on this device</string>
 </resources>
