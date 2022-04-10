@@ -26,8 +26,8 @@ class FABSplitListener(private val fabProvider: FABProvider) : DefaultLifecycleO
         fabProvider.fab.visibility = if (shouldHideFAB) View.GONE else View.VISIBLE
     }
 
-    override fun onCreate(owner: LifecycleOwner) {
-        super.onCreate(owner)
+    override fun onStart(owner: LifecycleOwner) {
+        super.onStart(owner)
         SplitController
             .getInstance()
             .addSplitListener(
@@ -37,8 +37,8 @@ class FABSplitListener(private val fabProvider: FABProvider) : DefaultLifecycleO
             )
     }
 
-    override fun onDestroy(owner: LifecycleOwner) {
-        super.onDestroy(owner)
+    override fun onStop(owner: LifecycleOwner) {
+        super.onStop(owner)
         SplitController
             .getInstance()
             .removeSplitListener(fabSplitListener)
