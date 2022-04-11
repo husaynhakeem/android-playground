@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Activity Embedding</string>
+    <string name="action_settings">Settings</string>
+    <string name="detail_label">Just the letter</string>
+    <string name="activity_list_label">Letters</string>
+    <string name="detail_placeholder_label">Select a letter</string>
+    <string name="label_share"><u>Share</u></string>
+    <string name="label_sharing">Sending the letter %s to people nearby by telepathy</string>
+    <string name="content_description_fab">Random button</string>
+    <string name="split_not_supported">Split is not supported on this device</string>
+</resources>
