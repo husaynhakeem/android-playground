@@ -23,9 +23,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".detail.DetailActivity" />
+        <activity android:name=".details.DetailsActivity" />
 
-        <activity android:name=".detail.DetailPlaceholderActivity" />
+        <activity android:name=".details.DetailsPlaceholderActivity" />
 
         <activity android:name=".share.ShareActivity" />
     </application>

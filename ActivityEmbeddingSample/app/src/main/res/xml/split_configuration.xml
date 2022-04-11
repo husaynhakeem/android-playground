@@ -8,13 +8,13 @@
         window:splitRatio="0.4">
         <SplitPairFilter
             window:primaryActivityName=".list.ListActivity"
-            window:secondaryActivityName=".detail.DetailActivity" />
+            window:secondaryActivityName=".details.DetailsActivity" />
         <SplitPairFilter
-            window:primaryActivityName=".detail.DetailActivity"
+            window:primaryActivityName=".details.DetailsActivity"
             window:secondaryActivityName=".share.ShareActivity" />
     </SplitPairRule>
     <SplitPlaceholderRule
-        window:placeholderActivityName=".detail.DetailPlaceholderActivity"
+        window:placeholderActivityName=".details.DetailsPlaceholderActivity"
         window:splitRatio="0.4">
         <ActivityFilter window:activityName=".list.ListActivity" />
     </SplitPlaceholderRule>

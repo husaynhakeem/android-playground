@@ -1,4 +1,4 @@
-package com.husaynhakeem.activityembeddingsample.detail
+package com.husaynhakeem.activityembeddingsample.details
 
 import android.content.Context
 import android.content.Intent
@@ -7,12 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.husaynhakeem.activityembeddingsample.FABProvider
 import com.husaynhakeem.activityembeddingsample.FABSplitListener
-import com.husaynhakeem.activityembeddingsample.databinding.ActivityDetailBinding
+import com.husaynhakeem.activityembeddingsample.databinding.ActivityDetailsBinding
 import com.husaynhakeem.activityembeddingsample.share.ShareActivity
 
-class DetailActivity : AppCompatActivity(), FABProvider {
+class DetailsActivity : AppCompatActivity(), FABProvider {
 
-    private lateinit var binding: ActivityDetailBinding
+    private lateinit var binding: ActivityDetailsBinding
 
     init {
         lifecycle.addObserver(FABSplitListener(this))
@@ -21,7 +21,7 @@ class DetailActivity : AppCompatActivity(), FABProvider {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityDetailBinding.inflate(layoutInflater)
+        binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val letter = getLetter()
@@ -44,7 +44,7 @@ class DetailActivity : AppCompatActivity(), FABProvider {
         private const val EXTRA_LETTER = "extra-letter"
 
         fun openDetailScreenFor(letter: String, with: Context) {
-            val intent = Intent(with, DetailActivity::class.java)
+            val intent = Intent(with, DetailsActivity::class.java)
             intent.putExtra(EXTRA_LETTER, letter)
             with.startActivity(intent)
         }

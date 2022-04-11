@@ -8,7 +8,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.husaynhakeem.activityembeddingsample.FABProvider
 import com.husaynhakeem.activityembeddingsample.FABSplitListener
 import com.husaynhakeem.activityembeddingsample.databinding.ActivityListBinding
-import com.husaynhakeem.activityembeddingsample.detail.DetailActivity
+import com.husaynhakeem.activityembeddingsample.details.DetailsActivity
 
 class ListActivity : AppCompatActivity(), FABProvider {
 
@@ -38,7 +38,7 @@ class ListActivity : AppCompatActivity(), FABProvider {
     }
 
     private fun openDetailScreenFor(letter: String) {
-        DetailActivity.openDetailScreenFor(letter, with = this)
+        DetailsActivity.openDetailScreenFor(letter, with = this)
     }
 
     // FABProvider
