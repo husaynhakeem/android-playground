@@ -1,23 +1,23 @@
 package com.husaynhakeem.menuhostsample
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 
 private const val INITIAL_USERNAME = "Husayn Hakeem"
 
 /**
- * A [Fragment] that will inflate a menu and add it to its host [Activity]'s app bar menu.
+ * A [Fragment] that will create its own menu using a [Toolbar].
  */
-class ActivityOwnedAppBarProfileFragment :
-    Fragment(R.layout.fragment_profile_activity_owned_appbar) {
+class FragmentOwnedAppBarProfileFragment :
+    Fragment(R.layout.fragment_profile_fragment_owned_appbar) {
 
+    private lateinit var toolbar: Toolbar
     private lateinit var usernameEditText: EditText
 
     private var savedUsername: String = INITIAL_USERNAME
@@ -25,38 +25,42 @@ class ActivityOwnedAppBarProfileFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+        (requireActivity() as? AppCompatActivity)?.supportActionBar?.hide()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (requireActivity() as? AppCompatActivity)?.supportActionBar?.show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Set up the toolbar
+        toolbar = view.findViewById(R.id.toolbar)
+        toolbar.inflateMenu(R.menu.menu_profile)
+        toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.saveProfile -> {
+                    saveProfile()
+                    maybeUpdateMenu()
+                    true
+                }
+                else -> false
+            }
+        }
+        toolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
+        maybeUpdateMenu()
+
+        // Set up the username edit text
         usernameEditText = view.findViewById(R.id.profileUsernameEditText)
         usernameEditText.setText(username)
         usernameEditText.doOnTextChanged { text, _, _, _ ->
             username = text.toString()
             maybeUpdateMenu()
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_profile, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.saveProfile -> {
-                saveProfile()
-                maybeUpdateMenu()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        val saveProfileItem = menu.findItem(R.id.saveProfile)
-        saveProfileItem.isEnabled = didUsernameChange()
     }
 
     private fun saveProfile() {
@@ -71,7 +75,8 @@ class ActivityOwnedAppBarProfileFragment :
     }
 
     private fun maybeUpdateMenu() {
-        requireActivity().invalidateOptionsMenu()
+        val saveProfileItem = toolbar.menu.findItem(R.id.saveProfile)
+        saveProfileItem.isEnabled = didUsernameChange()
     }
 
     private fun didUsernameChange(): Boolean {

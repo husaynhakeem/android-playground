@@ -3,4 +3,7 @@
     <string name="profile_hint_username">Username</string>
     <string name="profile_menu_item_save">Save profile</string>
     <string name="profile_save_message">You profile has been updated!</string>
+    <string name="activity_owned_appbar_title">Activity owned app bar</string>
+    <string name="fragment_owned_appbar_title">Fragment owned app bar</string>
+    <string name="menu_host_title">Menu host</string>
 </resources>
