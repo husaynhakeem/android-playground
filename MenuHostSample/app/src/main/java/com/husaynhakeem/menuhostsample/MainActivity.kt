@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.menuHost -> {
+                findNavController(R.id.navHostFragment).navigate(R.id.menuHostProfileFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)

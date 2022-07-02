@@ -13,4 +13,9 @@
         android:id="@+id/fragmentOwnedAppBarProfileFragment"
         android:name="com.husaynhakeem.menuhostsample.FragmentOwnedAppBarProfileFragment"
         android:label="FragmentOwnedAppBarProfileFragment" />
+
+    <fragment
+        android:id="@+id/menuHostProfileFragment"
+        android:name="com.husaynhakeem.menuhostsample.MenuHostProfileFragment"
+        android:label="MenuHostProfileFragment" />
 </navigation>
