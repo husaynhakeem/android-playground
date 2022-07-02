@@ -18,4 +18,9 @@
         android:id="@+id/menuHostProfileFragment"
         android:name="com.husaynhakeem.menuhostsample.MenuHostProfileFragment"
         android:label="MenuHostProfileFragment" />
+
+    <activity
+        android:id="@+id/menuHostViewPagerActivity"
+        android:name="com.husaynhakeem.menuhostsample.MenuHostViewPagerActivity"
+        android:label="MenuHostViewPagerActivity" />
 </navigation>

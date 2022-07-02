@@ -16,4 +16,9 @@
         android:id="@+id/menuHost"
         android:title="@string/menu_host_title"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menuHostViewPager"
+        android:title="@string/menu_host_view_pager_title"
+        app:showAsAction="never" />
 </menu>

@@ -32,6 +32,10 @@ class MainActivity : AppCompatActivity() {
                 findNavController(R.id.navHostFragment).navigate(R.id.menuHostProfileFragment)
                 true
             }
+            R.id.menuHostViewPager -> {
+                findNavController(R.id.navHostFragment).navigate(R.id.menuHostViewPagerActivity)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

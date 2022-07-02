@@ -6,4 +6,6 @@
     <string name="activity_owned_appbar_title">Activity owned app bar</string>
     <string name="fragment_owned_appbar_title">Fragment owned app bar</string>
     <string name="menu_host_title">Menu host</string>
+    <string name="menu_host_view_pager_title">Menu host ViewPager</string>
+    <string name="view_pager_menu_item_click_message">Menu item %d clicked</string>
 </resources>

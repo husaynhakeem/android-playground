@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".MenuHostViewPagerActivity"
+            android:label="@string/menu_host_view_pager_title" />
     </application>
 
 </manifest>
