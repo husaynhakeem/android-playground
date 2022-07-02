@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/profileUsernameEditText"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="32dp"
+    android:hint="@string/profile_hint_username"
+    android:importantForAutofill="no"
+    android:inputType="text"
+    android:lines="1"
+    android:singleLine="true" />

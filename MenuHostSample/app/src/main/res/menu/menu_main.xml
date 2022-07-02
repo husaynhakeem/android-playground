@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/activityOwnedAppBar"
+        android:title="@string/activity_owned_appbar_title"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/fragmentOwnedAppBar"
+        android:title="@string/fragment_owned_appbar_title"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menuHost"
+        android:title="@string/menu_host_title"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menuHostViewPager"
+        android:title="@string/menu_host_view_pager_title"
+        app:showAsAction="never" />
+</menu>
