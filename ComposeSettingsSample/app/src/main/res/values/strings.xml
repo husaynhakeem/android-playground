@@ -1,7 +1,32 @@
 <resources>
     <string name="app_name">ComposeSettingsSample</string>
 
+    <string name="cd_go_back">Go back to previous screen</string>
+    <string name="title_settings">Settings</string>
+
+    <string name="setting_enable_notifications">Enable notifications</string>
+    <string name="cd_notifications_enabled">Notifications enabled</string>
+    <string name="cd_notifications_disabled">Notifications disabled</string>
+
+    <string name="setting_show_hints">Show hints</string>
+    <string name="cd_hints_enabled">Hints enabled</string>
+    <string name="cd_hints_disabled">Hints disabled</string>
+
+    <string name="setting_manage_subscription">Manage subscription</string>
+    <string name="cd_open_subscription">Open subscription management</string>
+
+    <string name="setting_marketing_options">Receive marketing emails?</string>
+    <string-array name="setting_marketing_options_choice">
+        <item>Opt-in for marketing emails</item>
+        <item>Don\'t send me emails</item>
+    </string-array>
+
+    <string name="setting_theme_option">Theme</string>
+    <string name="cd_select_theme">Select theme</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_system">System</string>
+
+    <string name="setting_app_version">App Version</string>
+    <string name="app_version">v1.1</string>
 </resources>
