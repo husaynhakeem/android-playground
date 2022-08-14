@@ -39,9 +39,10 @@ android {
         kotlinCompilerExtensionVersion compose_version
     }
     packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
+        exclude "**/attach_hotspot_windows.dll"
+        exclude "META-INF/AL2.0"
+        exclude "META-INF/LGPL2.1"
+        exclude "META-INF/licenses/ASM"
     }
 }
 
@@ -73,4 +74,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+    androidTestImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
+    androidTestImplementation("org.mockito:mockito-android:4.5.1")
 }

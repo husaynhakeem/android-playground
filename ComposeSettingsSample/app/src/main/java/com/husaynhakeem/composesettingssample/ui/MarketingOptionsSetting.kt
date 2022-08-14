@@ -7,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -36,6 +37,7 @@ fun MarketingOptionsSetting(
             options.forEachIndexed { index, option ->
                 Row(
                     modifier = Modifier
+                        .testTag(Tags.TAG_MARKETING_OPTION + index)
                         .fillMaxWidth()
                         .selectable(
                             selected = index == selectedOption.id,
