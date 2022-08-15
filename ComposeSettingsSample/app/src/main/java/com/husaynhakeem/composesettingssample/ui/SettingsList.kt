@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.sp
 import com.husaynhakeem.composesettingssample.R
 import com.husaynhakeem.composesettingssample.SettingsState
 import com.husaynhakeem.composesettingssample.SettingsViewModel
-import com.husaynhakeem.composesettingssample.ui.theme.AppVersionSetting
 
 @Composable
 fun SettingsList(
