@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
@@ -31,6 +32,7 @@ fun ThemeSetting(
     ) {
         Row(
             modifier = Modifier
+                .testTag(Tags.TAG_SELECT_THEME)
                 .clickable(onClickLabel = stringResource(id = R.string.cd_select_theme)) {
                     expanded = !expanded
                 }
@@ -41,7 +43,10 @@ fun ThemeSetting(
                 text = title,
                 modifier = Modifier.weight(1f),
             )
-            Text(text = stringResource(id = selectedTheme.label))
+            Text(
+                text = stringResource(id = selectedTheme.label),
+                modifier = Modifier.testTag(Tags.TAG_THEME)
+            )
         }
         DropdownMenu(
             expanded = expanded,
@@ -51,6 +56,7 @@ fun ThemeSetting(
             Theme.values()
                 .forEach { theme ->
                     DropdownMenuItem(
+                        modifier = Modifier.testTag(Tags.TAG_THEME_OPTION + stringResource(id = theme.label)),
                         onClick = {
                             onOptionSelected(theme)
                             expanded = false
