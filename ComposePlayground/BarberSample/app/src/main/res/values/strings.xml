@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BarberApp</string>
+    <string name="lading_screen__title">Good Beard</string>
+    <string name="lading_screen__body">A League of Experienced Men\'s Hairdressers</string>
+    <string name="barbers_section_header">Our Barbers</string>
+    <string name="services_section_header">Services</string>
+</resources>
