@@ -8,9 +8,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.husaynhakeem.sideeffectssample.log
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 
-const val LAUNCHED_EFFECT = "launched effect"
+const val LAUNCHED_EFFECT = "Launched effect"
 
 @Composable
 fun LaunchedEffectScreen() {
@@ -21,9 +23,13 @@ fun LaunchedEffectScreen() {
         if (!shouldTimerRun) {
             return@LaunchedEffect
         }
-        while (true) {
-            delay(1_000)
-            timer++
+        try {
+            while (true) {
+                delay(1_000)
+                timer++
+            }
+        } catch (exception: CancellationException) {
+            log("Launched effect job cancelled with $exception")
         }
     }
 

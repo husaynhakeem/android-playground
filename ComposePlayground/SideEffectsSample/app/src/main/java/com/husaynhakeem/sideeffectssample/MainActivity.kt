@@ -14,6 +14,8 @@ import com.husaynhakeem.sideeffectssample.screen.home.HOME
 import com.husaynhakeem.sideeffectssample.screen.home.HomeScreen
 import com.husaynhakeem.sideeffectssample.screen.launchedeffect.LAUNCHED_EFFECT
 import com.husaynhakeem.sideeffectssample.screen.launchedeffect.LaunchedEffectScreen
+import com.husaynhakeem.sideeffectssample.screen.sideeffect.SIDE_EFFECT
+import com.husaynhakeem.sideeffectssample.screen.sideeffect.SideEffectScreen
 import com.husaynhakeem.sideeffectssample.ui.theme.SideEffectsSampleTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,6 +35,11 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable(LAUNCHED_EFFECT) { LaunchedEffectScreen() }
+                        composable(SIDE_EFFECT) {
+                            SideEffectScreen { passwordStrength ->
+                                log("Side effect password strength is $passwordStrength")
+                            }
+                        }
                     }
                 }
             }

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.husaynhakeem.sideeffectssample.screen.launchedeffect.LAUNCHED_EFFECT
+import com.husaynhakeem.sideeffectssample.screen.sideeffect.SIDE_EFFECT
 
 const val HOME = "home"
 
@@ -23,6 +24,10 @@ fun HomeScreen(
     ) {
         Item(
             route = LAUNCHED_EFFECT,
+            navigateTo = navigateTo,
+        )
+        Item(
+            route = SIDE_EFFECT,
             navigateTo = navigateTo,
         )
     }
