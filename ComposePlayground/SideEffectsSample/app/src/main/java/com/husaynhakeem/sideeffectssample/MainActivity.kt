@@ -12,6 +12,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.husaynhakeem.sideeffectssample.screen.home.HOME
 import com.husaynhakeem.sideeffectssample.screen.home.HomeScreen
+import com.husaynhakeem.sideeffectssample.screen.launchedeffect.LAUNCHED_EFFECT
+import com.husaynhakeem.sideeffectssample.screen.launchedeffect.LaunchedEffectScreen
 import com.husaynhakeem.sideeffectssample.ui.theme.SideEffectsSampleTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,7 +27,12 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = HOME) {
-                        composable(HOME) { HomeScreen() }
+                        composable(HOME) {
+                            HomeScreen { route ->
+                                navController.navigate(route)
+                            }
+                        }
+                        composable(LAUNCHED_EFFECT) { LaunchedEffectScreen() }
                     }
                 }
             }
