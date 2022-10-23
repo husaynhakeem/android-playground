@@ -1,4 +1,4 @@
-package com.husaynhakeem.sideeffectssample.screen.launchedeffect
+package com.husaynhakeem.sideeffectssample.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button

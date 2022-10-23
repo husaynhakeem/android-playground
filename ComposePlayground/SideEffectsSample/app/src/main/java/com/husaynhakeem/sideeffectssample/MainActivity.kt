@@ -10,12 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.husaynhakeem.sideeffectssample.screen.home.HOME
-import com.husaynhakeem.sideeffectssample.screen.home.HomeScreen
-import com.husaynhakeem.sideeffectssample.screen.launchedeffect.LAUNCHED_EFFECT
-import com.husaynhakeem.sideeffectssample.screen.launchedeffect.LaunchedEffectScreen
-import com.husaynhakeem.sideeffectssample.screen.sideeffect.SIDE_EFFECT
-import com.husaynhakeem.sideeffectssample.screen.sideeffect.SideEffectScreen
+import com.husaynhakeem.sideeffectssample.screen.*
 import com.husaynhakeem.sideeffectssample.ui.theme.SideEffectsSampleTheme
 
 class MainActivity : ComponentActivity() {
@@ -40,6 +35,7 @@ class MainActivity : ComponentActivity() {
                                 log("Side effect password strength is $passwordStrength")
                             }
                         }
+                        composable(REMEMBER_UPDATED_STATE) { RememberUpdatedStateScreen() }
                     }
                 }
             }

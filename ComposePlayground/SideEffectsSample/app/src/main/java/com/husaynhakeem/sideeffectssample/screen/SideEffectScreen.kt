@@ -1,4 +1,4 @@
-package com.husaynhakeem.sideeffectssample.screen.sideeffect
+package com.husaynhakeem.sideeffectssample.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
