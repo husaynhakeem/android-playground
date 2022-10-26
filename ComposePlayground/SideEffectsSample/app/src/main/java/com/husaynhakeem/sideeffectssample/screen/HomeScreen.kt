@@ -35,6 +35,10 @@ fun HomeScreen(
             route = REMEMBER_UPDATED_STATE,
             navigateTo = navigateTo,
         )
+        Item(
+            route = DISPOSABLE_EFFECT,
+            navigateTo = navigateTo,
+        )
     }
 }
 
