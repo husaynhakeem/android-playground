@@ -39,6 +39,7 @@ class MainActivity : ComponentActivity() {
                         composable(DISPOSABLE_EFFECT) { DisposableEffectScreen() }
                         composable(DERIVED_STATE_OF) { DerivedStateOfScreen() }
                         composable(PRODUCE_STATE) { ProduceStateScreen() }
+                        composable(REMEMBER_COROUTINE_SCOPE) { RememberCoroutineScopeScreen() }
                     }
                 }
             }
