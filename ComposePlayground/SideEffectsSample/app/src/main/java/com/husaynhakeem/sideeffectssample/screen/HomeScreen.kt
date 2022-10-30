@@ -19,6 +19,7 @@ private val screens = arrayOf(
     REMEMBER_UPDATED_STATE,
     DISPOSABLE_EFFECT,
     DERIVED_STATE_OF,
+    PRODUCE_STATE,
 )
 
 @Composable

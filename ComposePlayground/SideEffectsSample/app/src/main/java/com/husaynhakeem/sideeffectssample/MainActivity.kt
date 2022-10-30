@@ -38,6 +38,7 @@ class MainActivity : ComponentActivity() {
                         composable(REMEMBER_UPDATED_STATE) { RememberUpdatedStateScreen() }
                         composable(DISPOSABLE_EFFECT) { DisposableEffectScreen() }
                         composable(DERIVED_STATE_OF) { DerivedStateOfScreen() }
+                        composable(PRODUCE_STATE) { ProduceStateScreen() }
                     }
                 }
             }
