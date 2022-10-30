@@ -13,6 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 const val HOME = "home"
+private val screens = arrayOf(
+    LAUNCHED_EFFECT,
+    SIDE_EFFECT,
+    REMEMBER_UPDATED_STATE,
+    DISPOSABLE_EFFECT,
+    DERIVED_STATE_OF,
+)
 
 @Composable
 fun HomeScreen(
@@ -23,22 +30,12 @@ fun HomeScreen(
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
     ) {
-        Item(
-            route = LAUNCHED_EFFECT,
-            navigateTo = navigateTo,
-        )
-        Item(
-            route = SIDE_EFFECT,
-            navigateTo = navigateTo,
-        )
-        Item(
-            route = REMEMBER_UPDATED_STATE,
-            navigateTo = navigateTo,
-        )
-        Item(
-            route = DISPOSABLE_EFFECT,
-            navigateTo = navigateTo,
-        )
+        screens.forEach { screen ->
+            Item(
+                route = screen,
+                navigateTo = navigateTo,
+            )
+        }
     }
 }
 
