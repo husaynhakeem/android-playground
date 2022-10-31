@@ -17,6 +17,13 @@ const val REMEMBER_UPDATED_STATE = "Remember updated state"
 
 private val colors = arrayOf("red", "green", "blue")
 
+/**
+ * [rememberUpdatedState] is a composable function that creates a reference to a value which can be
+ * updated. When used in an effect, updates to the value don't trigger the effect to restart.
+ *
+ * It should be used when parameters or values computed during composition
+ * are referenced by a long-lived lambda or object expression.
+ */
 @Composable
 fun RememberUpdatedStateScreen() {
     var isDropdownMenuExpanded by remember { mutableStateOf(false) }

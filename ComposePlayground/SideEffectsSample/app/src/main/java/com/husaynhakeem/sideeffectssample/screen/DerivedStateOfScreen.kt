@@ -17,6 +17,13 @@ import kotlinx.coroutines.launch
 
 const val DERIVED_STATE_OF = "Derived state of"
 
+/**
+ * [derivedStateOf] is a function that returns a [State] whose value is calculated (derived) from
+ * one or multiple other [State] objects.
+ *
+ * [derivedStateOf]'s calculation is **only** triggered when the value of one of the [State] objects
+ * used in it changes.
+ */
 @Composable
 fun DerivedStateOfScreen() {
     val coroutineScope = rememberCoroutineScope()

@@ -16,6 +16,15 @@ import com.husaynhakeem.sideeffectssample.log
 
 const val DISPOSABLE_EFFECT = "Disposable effect"
 
+/**
+ * [DisposableEffect] is a composable function that runs effects that have to be cleaned up after
+ * the keys change or the composable leaves composition.
+ *
+ * The effect is run on the initial composition and on key changes.
+ *
+ * The effect is disposed of (cleaned up) after key changes and when leaving composition (before
+ * triggering the new effect).
+ */
 @Composable
 fun DisposableEffectScreen() {
     val lifecycleOwner by remember { mutableStateOf(FakeLifecycleOwner()) }

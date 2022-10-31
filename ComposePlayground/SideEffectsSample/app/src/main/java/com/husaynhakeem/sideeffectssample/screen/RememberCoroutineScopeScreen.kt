@@ -12,6 +12,15 @@ import kotlinx.coroutines.launch
 
 const val REMEMBER_COROUTINE_SCOPE = "Remember coroutine scope"
 
+/**
+ * [rememberCoroutineScope] is a composable function that returns a coroutine scope. This scope is
+ * bound to the composition where it's called.
+ *
+ * It allows running a coroutine outside a composable, but scoped to a composable so that it's
+ * cancelled when the composable leaves composition.
+ *
+ * The same coroutine scope is returned across recompositions.
+ */
 @Composable
 fun RememberCoroutineScopeScreen() {
     val coroutineScope = rememberCoroutineScope()

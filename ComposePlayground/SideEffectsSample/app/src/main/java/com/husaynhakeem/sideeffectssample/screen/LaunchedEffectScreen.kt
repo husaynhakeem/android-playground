@@ -14,6 +14,14 @@ import kotlinx.coroutines.delay
 
 const val LAUNCHED_EFFECT = "Launched effect"
 
+/**
+ * [LaunchedEffect] is a composable function that can only be run inside other compsoables.
+ * - Runs a suspend effect in a coroutine when entering the composition, and cancels it when it
+ * leaves the composition.
+ * - Run effects across recompositions.
+ * - If recomposed with different keys, it will cancel the ongoing coroutine and launch the effect
+ * in a new coroutine.
+ */
 @Composable
 fun LaunchedEffectScreen() {
     var timer by rememberSaveable { mutableStateOf(0) }

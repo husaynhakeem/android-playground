@@ -18,6 +18,10 @@ enum class PasswordStrength {
     STRONG, MEDIUM, WEAK
 }
 
+/**
+ * [SideEffect]'s effect is run on every successful recomposition. It can be used to share compose
+ * state with external objects not manager by compose, e.g analytics library.
+ */
 @Composable
 fun SideEffectScreen(
     passwordStrengthCallback: (PasswordStrength) -> Unit,

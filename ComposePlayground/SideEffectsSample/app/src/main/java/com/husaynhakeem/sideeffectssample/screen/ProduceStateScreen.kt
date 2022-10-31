@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CrueltyFree
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
@@ -20,6 +21,25 @@ import kotlinx.coroutines.delay
 
 const val PRODUCE_STATE = "Produce state"
 
+/**
+ * [produceState] is syntax sugar on top of [LaunchedEffect], and can be used when feeding a
+ * composable's state. The following are equivalent:
+ *
+ * - With [produceState]:
+ * ```
+ * val myState = produceState(myStateInitialValue, keys) {
+ *     value = computation()
+ * }
+ * ```
+ *
+ * - With [LaunchedEffect]:
+ * ```
+ * var myState by remember { mutableStateOf(myStateInitialValue) }
+ * LaunchedEffect(keys) {
+ *     myState = computation()
+ * }
+ * ```
+ */
 @Composable
 fun ProduceStateScreen() {
     Box(
